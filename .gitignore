@@ -1,2 +1,4 @@
 build/
-lib/
+lib/shared/*.dll
+lib/static/*.a
+.vscode
