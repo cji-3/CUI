@@ -1,10 +1,15 @@
 # CUI：
 
+![Logo](./document/CUI_LOGO_64x64.png)
+
 ## C語言使用者介面UI函式庫
 
 開發與維護：CJI 公司 (中華民國台灣省彰化縣)
 
-作者：林東頡 (綽號：CJI)
+作者：
+
+- 林東頡 (綽號：CJI)
+- ???
 
 版本：1.0.0
 
@@ -15,24 +20,27 @@
 ### 您可以自由地：
 
 - 分享：以任何媒介或格式重製及散布本程式碼。
-
 - 修改：在任何目的下，改作、轉變本程式碼或以此為基礎進行創作。
 
 ### 必須遵守下列條件：
 
 - 姓名標示：您必須註明作者出處，並提供授權條款的連結。
-
 - 禁止冒名：嚴禁聲稱本程式碼為您個人之原創作品。
 
 ---
 
 # CUI：
 
+![Logo](./document/CUI_LOGO_64x64.png)
+
 ## C code User Interface (UI) Function Library
 
 Developed and Maintained by: CJI Corporation (Changhua County, Taiwan Province, Republic of China)
 
-Author: 林東頡(Lin Dong-Jie) (Nickname: CJI)
+Author:
+
+- 林東頡(Lin Dong-Jie) (Nickname: CJI)
+- ???
 
 Version: 1.0.0
 
@@ -46,13 +54,11 @@ International License (CC BY 4.0).
 ### You are free to:
 
 - Share: Copy and redistribute the material in any medium or format.
-
 - Adapt: Remix, transform, and build upon the material for any purpose.
 
 ### Under the following terms:
 
 - Attribution: You must give appropriate credit and provide a link to the license.
-
 - Ownership: Claiming this code as your own original work is strictly prohibited.
 
 ---
