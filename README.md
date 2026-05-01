@@ -6,7 +6,7 @@
 
 -確保path設定
 
-build step
+# build step
 
 ---
 
