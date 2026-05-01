@@ -1,9 +1,0 @@
-{
-    "cmake.generator": "MinGW Makefiles",
-    "cmake.configureArgs": [
-        "-DCMAKE_C_COMPILER=gcc",
-        "-DCMAKE_CXX_COMPILER=g++"
-    ],
-    "cmake.configureOnOpen": true,
-    "cmake.buildDirectory": "${workspaceFolder}/build"
-}
