@@ -10,6 +10,6 @@
 
 1.確認以上沒有問題
 
-2.run_build.bat
+2.運行run_build.bat
 
 3.End
