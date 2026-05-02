@@ -9,7 +9,7 @@
 作者：
 
 - 林東頡 (綽號：CJI)
-- ???
+- 賴洧霖 (weilinlai)
 
 版本：1.0.0
 
@@ -40,7 +40,7 @@ Developed and Maintained by: CJI Corporation (Changhua County, Taiwan Province, 
 Author:
 
 - 林東頡(Lin Dong-Jie) (Nickname: CJI)
-- ???
+- 賴洧霖(Lai Wei-Lin)  
 
 Version: 1.0.0
 
