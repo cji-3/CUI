@@ -1,0 +1,45 @@
+name: CUI-CI-Quality-Check
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - name: 1. 檢出程式碼 (Checkout)
+        uses: actions/checkout@v4
+
+      - name: 2. 配置 MinGW 環境
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x64
+
+      - name: 3. 檢查 SDL2 庫路徑
+        run: |
+          if (Test-Path "extern/SDL/include/SDL.h") {
+            echo "SDL2 標頭檔已就緒"
+          } else {
+            echo "錯誤：找不到 SDL2 標頭檔，請確認 extern 資料夾已上傳"
+            exit 1
+          }
+
+      - name: 4. 執行 CMake 配置
+        run: |
+          mkdir build
+          cd build
+          cmake -G "MinGW Makefiles" -DSDL_MAIN_HANDLED=ON ..
+
+      - name: 5. 編譯專案 (Build)
+        run: |
+          cd build
+          cmake --build . --config Release
+
+      - name: 6. 執行品質測試 (Run AC Test)
+        run: |
+          cd build
+          ./github_test.exe
