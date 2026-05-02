@@ -17,13 +17,14 @@
 - test 放測試(範例)程式碼
 - build 放CMake快取檔案
 
+//此區需修改
 CUI/
 ├── build/              # CMake 快取與編譯暫存檔
 ├── extern/             # 外部相依庫 (如 SDL 原始檔案)
 ├── include/            # 公用標頭檔 (.h)
 │   ├── SDL/            # SDL 的標頭檔
 │   ├── CUI.h           # 總門面標頭檔
-│   └── CUI_init.h    
+│   └── CUI_init.h
 ├── lib/                # 編譯後的庫檔案
 │   ├── shared/         # 動態庫 (.dll)
 │   └── static/         # 靜態庫 (.a)
