@@ -60,9 +60,15 @@ target_link_libraries(cui_shared PRIVATE ${SDL2_STATIC_DEPS})
 # --- 建置測試程式 ---
 # 來源已修正為 test/test.c
 add_executable(main_test test/test.c)
+add_executable(github_test test/github_test.c)
 
 # 連結順序：測試程式 -> CUI 靜態庫 -> SDL2 核心
 target_link_libraries(main_test PRIVATE
+    cui_static
+    ${SDL2_STATIC_DEPS}
+)
+
+target_link_libraries(github_test PRIVATE
     cui_static
     ${SDL2_STATIC_DEPS}
 )
@@ -72,5 +78,6 @@ if(MINGW)
     # -mconsole: 確保執行時會跳出 CMD 視窗顯示 printf 內容
     # -static: 強制靜態連結標準庫，避免遺失 DLL 報錯
     target_link_options(main_test PRIVATE "-mconsole" "-static")
+    target_link_options(github_test PRIVATE "-mconsole" "-static")
     target_link_options(cui_shared PRIVATE "-static-libgcc")
 endif()
