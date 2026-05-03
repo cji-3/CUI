@@ -7,13 +7,13 @@ cmake --build .
 
 if %errorlevel% equ 0 (
     echo.
-    echo °õ¦æ´ú¸Õµ{¦¡...
+    echo ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õµ{ï¿½ï¿½...
     echo.--------------------
     main_test.exe
     cd ..
 ) else (
     echo.
-    echo ½sÄ¶¥¢±Ñ¡A½ÐÀË¬dµ{¦¡½X¡I
+    echo ï¿½sÄ¶ï¿½ï¿½ï¿½Ñ¡Aï¿½ï¿½ï¿½Ë¬dï¿½{ï¿½ï¿½ï¿½Xï¿½I
     cd ..
     pause
 )
