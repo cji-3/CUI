@@ -40,6 +40,8 @@ extern uint32_t CUI_INIT_WINDOW_MODE_MINIMIZED;				/**< 視窗最小化 */
 extern uint32_t CUI_INIT_WINDOW_MODE_MAXIMIZED;				/**< 視窗最大化 */
 extern uint32_t CUI_INIT_WINDOW_MODE_INPUT_GRABBED;			/**< 視窗已擷取輸入焦點 */
 
+//---
+
 /**
  * \brief 初始化，創建所謂SDL的視窗和渲染器
  *

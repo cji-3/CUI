@@ -92,6 +92,6 @@ International License (CC BY 4.0).
 
 #include "CUI_init.h"
 #include "CUI_def.h"
-#include "CUI_widgets.h"
+#include "CUI_display.h"
 
 #endif

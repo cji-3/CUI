@@ -1,7 +1,7 @@
 /**
  * @file CUI.c
  * @author 林東頡
- * @brief 實作。implementation.
+ * @brief 初始化實作。init implementation.
  * @version 1.0.0
  * @date 2026-04-30
  */
