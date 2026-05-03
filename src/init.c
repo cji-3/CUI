@@ -29,17 +29,6 @@ uint32_t CUI_INIT_WINDOW_MODE_INPUT_GRABBED=		SDL_WINDOW_INPUT_GRABBED;
 //靜態變數宣告
 static SDL_Window* _window=NULL;		/**< 存放window指標 */
 static SDL_Renderer* _renderer=NULL;	/**< 存放renderer指標 */
-//--高度寬度數據
-static int current_width = 0;
-static int current_height = 0;
-
-int CUI_GetWindowWidth() {
-    return current_width;
-}
-
-int CUI_GetWindowHeight() {
-    return current_height;
-}
 
 //初始化，創建所謂SDL的視窗和渲染器
 int CUI_Init(const char* window_title,int window_pos_x,int window_pos_y,int window_w,int window_h,uint32_t window_mode){
@@ -48,9 +37,6 @@ int CUI_Init(const char* window_title,int window_pos_x,int window_pos_y,int wind
 		_window=SDL_CreateWindow(window_title,window_pos_x,window_pos_y, window_w,window_h,window_mode);
 		_renderer=SDL_CreateRenderer(_window,-1,SDL_RENDERER_PRESENTVSYNC|SDL_RENDERER_ACCELERATED);
 
-
-		current_width = window_w;
-		current_height = window_h;
 		return !_window || !_renderer;
 	}
 	else{
@@ -68,4 +54,18 @@ void CUI_Quit(){
 	SDL_DestroyRenderer(_renderer);
 	SDL_DestroyWindow(_window);
 	SDL_Quit();
+}
+
+//取得視窗寬度
+int CUI_GetWindowWidth(){
+    int w;
+    SDL_GetWindowSize(_window,&w,NULL);
+    return w;
+}
+
+//取得視窗高度
+int CUI_GetWindowHeight(){
+    int h;
+    SDL_GetWindowSize(_window,NULL,&h);
+    return h;
 }
