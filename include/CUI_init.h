@@ -12,6 +12,8 @@
 //#include "CUI_def.h"
 
 #include<stdint.h>
+#include <SDL.h>
+
 
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus
@@ -99,6 +101,15 @@ int CUI_GetWindowWidth();
  * \since This function is available since CUI 1.0.0
  */
 int CUI_GetWindowHeight();
+/**
+ * 取得渲染器
+ */
+SDL_Renderer* CUI_GetRenderer(void);
+
+/**
+ * 取得視窗
+ */
+SDL_Window* CUI_GetWindow(void);
 
 /**
  * \brief 退出視窗，這將釋放所有CUI資源
