@@ -6,14 +6,13 @@
  * @date 2026-05-01
  */
 
- /*
- 創建元件分為
- - 簡單創建(Create)
- - 完整創建(WholeCreate)
-
- 簡單創建只需輸入基本參數
- 完整創建需輸入所有參數
- */
+/*
+創建元件分為
+- 簡單創建(Create)
+- 完整創建(WholeCreate)
+簡單創建只需輸入基本參數
+完整創建需輸入所有參數
+*/
 
 #ifndef _CUI_display_H_
 #define _CUI_display_H_
@@ -30,6 +29,9 @@ extern "C" {
 
 typedef uint32_t CUI_Color;
 
+/**
+ * \brief 顯示型元件之結構
+ */
 typedef struct{
 	int pow_x;					/**< x座標 */
 	int pow_y;					/**< y座標 */
