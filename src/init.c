@@ -49,15 +49,6 @@ int CUI_Init(const char* window_title,int window_pos_x,int window_pos_y,int wind
 	}
 }
 
-//取得渲染器
-SDL_Renderer* CUI_GetRenderer(void) {
-    return _renderer;
-}
-
-SDL_Window* CUI_GetWindow(void) {
-    return _window;
-}
-
 //退出視窗，這將釋放所有CUI資源
 void CUI_Quit(){
 	SDL_DestroyRenderer(_renderer);
