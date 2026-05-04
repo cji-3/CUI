@@ -42,13 +42,13 @@ typedef struct{
 	CUI_Color text_color;		/**< 文字顏色(RGBA8888) */
 	CUI_Color prospect_color;	/**< 前景色(RGBA8888) */
 	CUI_Color background_color;	/**< 背景色(RGBA8888) */
-	const char* font_path;		/**< 字體檔案路徑 */
+	const char* font_path;		/**< 字體檔案(.ttf)路徑 */
 	const char* image_path;		/**< 圖片路徑 */
 	bool shown;					/**< 是否顯示 */
 }CUI_Display;
 
 #define CUI_TEXT_SIZE_DEFAULT 16	/**< 文字大小預設值 */
-#define CUI_FONT_PATH_DEFAULT "C:\\Windows\\Fonts\\Arial"	/**< 字體檔案路徑預設值 */
+#define CUI_FONT_PATH_DEFAULT "C:\\Windows\\Fonts\\Arial\\arial.ttf"	/**< 字體檔案(.ttf)路徑預設值 */
 
 //---
 
