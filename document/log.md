@@ -29,13 +29,7 @@ CUI/
 │   ├── shared/         # 動態庫 (.dll)
 │   └── static/         # 靜態庫 (.a)
 ├── SDL_lib/            # SDL 專用的靜態庫 (.a)
-├── src/                # 原始碼實現檔 (.c)
-│   ├── Basic/          # 基礎功能模組
-│   ├── High-level/     # 高階抽象模組
-│   ├── Interactive/    # 互動邏輯模組
-│   ├── Layout/         # 佈局管理模組
-│   ├── Text/           # 文字處理模組
-│   └── CUI.c           # 核心實現
+├── src/                # 原始碼實現檔 (.c)  │   └── CUI.c           # 核心實現
 ├── test/               # 測試與範例程式碼
 │   └── test.c          # 測試進入點
 ├── CMakeLists.txt      # 建置設定檔
