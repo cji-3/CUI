@@ -2,16 +2,16 @@
 
 chcp 65001 >nul
 
-mkdir build
+if not exist build mkdir build
 cd build
-cmake -G "MinGW Makefiles" ..
+cmake -S .. -B . -G "MinGW Makefiles"
 cmake --build .
 
 if %errorlevel% equ 0 (
     echo.
     echo 執行測試程式...
     echo.--------------------
-    main_test.exe
+    ..\test\main_test.exe
     cd ..
 ) else (
     echo.
