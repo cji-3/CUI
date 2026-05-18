@@ -1,83 +1,131 @@
+# 最低 CMake 版本與專案資訊
 cmake_minimum_required(VERSION 3.10)
-project(CUI C)
+project(CUI VERSION 1.0.0 LANGUAGES C)
 
-# 設定 C 語言標準
+# 使用 C99 顯式啟用標準 C，並關閉編譯器擴展
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-# 1. 全域編譯參數
-# -DSDL_MAIN_HANDLED: 避免 SDL 接管 main 進入點
-add_compile_options(-Wall -O0 -DSDL_MAIN_HANDLED)
+# 依據平台開啟對應的警告等級
+if(MSVC)
+    add_compile_options(/W4 /permissive- /utf-8)
+else()
+    add_compile_options(-Wall -Wextra -Wpedantic -Wshadow -Wdouble-promotion -Wformat=2 -Wcast-align)
+endif()
 
-# 2. 設定外部庫路徑 (對應 extern/SDL)
-set(SDL_EXT_DIR "${CMAKE_SOURCE_DIR}/extern/SDL")
-set(SDL_INCLUDE_DIR "${SDL_EXT_DIR}/include")
-set(SDL_LIB_DIR "${SDL_EXT_DIR}/lib")
+# 專案路徑變數
+set(CUI_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
+set(CUI_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
+set(EXTERN_DIR ${PROJECT_SOURCE_DIR}/extern)
 
+# 自動掃描 extern/ 目錄下所有的外部庫
+# 為每個 extern/*/include 新增到全域 include path
+file(GLOB EXTERN_SUBDIRS "${EXTERN_DIR}/*")
+foreach(SUBDIR ${EXTERN_SUBDIRS})
+    if(IS_DIRECTORY ${SUBDIR})
+        # 檢查該子目錄是否有 include 資料夾
+        if(IS_DIRECTORY "${SUBDIR}/include")
+            list(APPEND EXTERNAL_INCLUDE_DIRS "${SUBDIR}/include")
+            message(STATUS "Found external include: ${SUBDIR}/include")
+        endif()
 
-# 包含標頭檔搜尋路徑 (include 目錄與 SDL 標頭檔)
-include_directories(include)
-include_directories("${SDL_INCLUDE_DIR}")
+        # 檢查該子目錄是否有 lib 資料夾，若有則搜尋庫檔
+        if(IS_DIRECTORY "${SUBDIR}/lib")
+            # 取得目錄名稱作為庫名稱（例如 SDL2, CLS）
+            get_filename_component(LIB_NAME ${SUBDIR} NAME)
 
-# 3. 定義 SDL2 連結依賴 (MinGW 必要系統庫)
-set(SDL2_STATIC_DEPS
-    "${SDL_LIB_DIR}/libSDL2.a"
-    mingw32
-    winmm
-    imm32
-    version
-    gdi32
-    setupapi
-    ole32
-    oleaut32
-    uuid
-    shell32
-    advapi32
+            # 嘗試在該目錄找到庫檔
+            file(GLOB LIB_FILES "${SUBDIR}/lib/*.a" "${SUBDIR}/lib/*.dll.a" "${SUBDIR}/lib/*.so" "${SUBDIR}/lib/*.dylib")
+            if(LIB_FILES)
+                # 使用第一個找到的庫檔
+                list(GET LIB_FILES 0 LIB_FILE)
+                set(${LIB_NAME}_LIBRARY ${LIB_FILE})
+                message(STATUS "Found external library (${LIB_NAME}): ${LIB_FILE}")
+                list(APPEND EXTERNAL_LIBRARIES ${LIB_FILE})
+            else()
+                message(STATUS "No library files found in ${SUBDIR}/lib")
+            endif()
+        endif()
+    endif()
+endforeach()
+
+# 檢查是否至少找到了必要的庫（例如 SDL2）
+if(NOT EXTERNAL_LIBRARIES)
+    message(FATAL_ERROR "No external libraries found in ${EXTERN_DIR}")
+endif()
+
+message(STATUS "External include directories: ${EXTERNAL_INCLUDE_DIRS}")
+message(STATUS "External libraries: ${EXTERNAL_LIBRARIES}")
+
+# CUI 的原始碼檔案清單（自動掃描 src/ 下所有 .c 檔案）
+file(GLOB CUI_SOURCES "${CUI_SOURCE_DIR}/*.c")
+message(STATUS "Found source files: ${CUI_SOURCES}")
+
+# 建立靜態與動態版本的 CUI 函式庫
+add_library(CUI_static STATIC ${CUI_SOURCES})
+add_library(CUI_shared SHARED ${CUI_SOURCES})
+
+# 設定 CUI 函式庫的 include path（包含自己的 include 與所有外部 include）
+target_include_directories(CUI_static PUBLIC
+    ${CUI_INCLUDE_DIR}
+    ${EXTERNAL_INCLUDE_DIRS}
 )
 
-# 4. 自動搜刮 src 底下的原始碼
-aux_source_directory(src DIR_SRCS)
-message(STATUS "找到的 CUI 原始碼: ${DIR_SRCS}")
-
-# --- 建立靜態庫 (libCUI.a) ---
-add_library(cui_static STATIC ${DIR_SRCS})
-set_target_properties(cui_static PROPERTIES
-    OUTPUT_NAME "CUI"
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib/static"
+target_include_directories(CUI_shared PUBLIC
+    ${CUI_INCLUDE_DIR}
+    ${EXTERNAL_INCLUDE_DIRS}
 )
 
-# --- 建立動態庫 (libCUI.dll) ---
-add_library(cui_shared SHARED ${DIR_SRCS})
-set_target_properties(cui_shared PROPERTIES
-    OUTPUT_NAME "CUI"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib/shared"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib/shared"
-)
-# 當編譯動態庫時加入 CUI_EXPORTS 宏
-target_compile_definitions(cui_shared PRIVATE CUI_EXPORTS)
-target_link_libraries(cui_shared PRIVATE ${SDL2_STATIC_DEPS})
+# 連結所有外部庫
+target_link_libraries(CUI_static PUBLIC ${EXTERNAL_LIBRARIES})
+target_link_libraries(CUI_shared PUBLIC ${EXTERNAL_LIBRARIES})
 
-# --- 建置測試程式 ---
-# 來源已修正為 test/test.c
+# 設定輸出資料夾位置
+# 靜態庫 (.a) 與匯入庫 (.dll.a) 放到 bin/
+# 動態庫 (.dll) 放到 lib/
+set_target_properties(CUI_static PROPERTIES
+    OUTPUT_NAME CUI
+    PREFIX lib
+    ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin
+)
+
+set_target_properties(CUI_shared PROPERTIES
+    OUTPUT_NAME CUI
+    PREFIX lib
+    ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin
+    RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib
+    WINDOWS_EXPORT_ALL_SYMBOLS ON
+)
+
+# 將所有測試可執行檔輸出到 test/ 目錄
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/test)
+
+# main_test 目標
 add_executable(main_test test/test.c)
-add_executable(github_test test/github_test.c)
-
-# 連結順序：測試程式 -> CUI 靜態庫 -> SDL2 核心
-target_link_libraries(main_test PRIVATE
-    cui_static
-    ${SDL2_STATIC_DEPS}
+target_include_directories(main_test PRIVATE ${CUI_INCLUDE_DIR})
+target_link_libraries(main_test PRIVATE CUI_shared)
+# 建構後將 lib/ 內容複製到 test 目錄
+add_custom_command(TARGET main_test POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${PROJECT_SOURCE_DIR}/lib
+        ${PROJECT_SOURCE_DIR}/test
 )
 
-target_link_libraries(github_test PRIVATE
-    cui_static
-    ${SDL2_STATIC_DEPS}
-)
-
-# 5. 針對 MinGW 環境的連結優化
-if(MINGW)
-    # -mconsole: 確保執行時會跳出 CMD 視窗顯示 printf 內容
-    # -static: 強制靜態連結標準庫，避免遺失 DLL 報錯
-    target_link_options(main_test PRIVATE "-mconsole" "-static")
-    target_link_options(github_test PRIVATE "-mconsole" "-static")
-    target_link_options(cui_shared PRIVATE "-static-libgcc")
+# github_test 目標（如果存在的話）
+if(EXISTS "${PROJECT_SOURCE_DIR}/test/github_test.c")
+    add_executable(github_test test/github_test.c)
+    target_include_directories(github_test PRIVATE ${CUI_INCLUDE_DIR})
+    target_link_libraries(github_test PRIVATE CUI_shared)
+    add_custom_command(TARGET github_test POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${PROJECT_SOURCE_DIR}/bin
+            ${PROJECT_SOURCE_DIR}/test
+    )
+    add_custom_command(TARGET github_test POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${PROJECT_SOURCE_DIR}/lib
+            ${PROJECT_SOURCE_DIR}/test
+    )
 endif()

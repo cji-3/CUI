@@ -7,8 +7,8 @@
  */
 
 #include "../include/CUI_init.h"
-//#include "../extern/SDL/include/CUI_def.h"
-#include "../extern/SDL/include/SDL.h"
+//#include "../extern/SDL2/include/CUI_def.h"
+#include "../extern/SDL2/include/SDL.h"
 
 //視窗位置常數
 int CUI_INIT_WINDOW_POS_CENTERED=SDL_WINDOWPOS_CENTERED;

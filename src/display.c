@@ -7,5 +7,5 @@
  */
 
 #include "../include/CUI_display.h"
-//#include "../extern/SDL/include/CUI_def.h"
-#include "../extern/SDL/include/SDL.h"
+//#include "../extern/SDL2/include/CUI_def.h"
+#include "../extern/SDL2/include/SDL.h"
