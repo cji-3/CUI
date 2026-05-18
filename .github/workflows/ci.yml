@@ -37,7 +37,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -G "MinGW Makefiles" -DSDL_MAIN_HANDLED=ON ..
+         cmake -S .. -B . -G "MinGW Makefiles"
 
       - name: 5. 編譯專案 (Build)
         run: |
