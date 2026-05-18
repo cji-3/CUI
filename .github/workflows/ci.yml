@@ -26,7 +26,7 @@ jobs:
 
       - name: 3. 檢查 SDL2 庫路徑
         run: |
-          if (Test-Path "extern/SDL/include/SDL.h") {
+          if (Test-Path "extern/SDL2/include/SDL.h") {
             echo "SDL2 標頭檔已就緒"
           } else {
             echo "錯誤：找不到 SDL2 標頭檔，請確認 extern 資料夾已上傳"
@@ -47,4 +47,4 @@ jobs:
       - name: 6. 執行品質測試 (Run AC Test)
         run: |
           cd test
-          ./github_test.exe
+          ./main_test.exe
