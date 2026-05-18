@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: windows-latest
+    runs-on: linux-latest
 
     steps:
       - name: 1. 檢出程式碼 (Checkout)
