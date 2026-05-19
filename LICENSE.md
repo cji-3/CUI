@@ -1,6 +1,6 @@
 # CUI：
 
-![Logo](./document/CUI_LOGO_64x64.png)
+![Logo](./doc/CUI_LOGO_64x64.png)
 
 ## C語言使用者介面UI函式庫
 
