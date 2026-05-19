@@ -25,7 +25,7 @@ CIU_WINDOW_XY_MIDDLE
 /*
 # CUI：
 
-![Logo](./document/CUI_LOGO_64x64.png)
+![Logo](../doc/CUI_LOGO_64x64.png)
 
 ## C語言使用者介面UI函式庫
 
@@ -56,7 +56,7 @@ CIU_WINDOW_XY_MIDDLE
 
 # CUI：
 
-![Logo](./document/CUI_LOGO_64x64.png)
+![Logo](../doc/CUI_LOGO_64x64.png)
 
 ## C code User Interface (UI) Function Library
 
