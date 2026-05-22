@@ -1,4 +1,4 @@
-name: CUI-CI-Quality-Check
+name: CUI Check
 
 on:
   push:
@@ -37,7 +37,7 @@ jobs:
         run: |
           mkdir build
           cd build
-        cmake -S .. -B . -G "MinGW Makefiles"
+          cmake -S .. -B . -G "MinGW Makefiles"
 
       - name: 5. 編譯專案 (Build)
         run: |
