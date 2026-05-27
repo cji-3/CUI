@@ -9,7 +9,9 @@
 int main() {
 	CUI_Init("test",50,50,640,360,CUI_INIT_WINDOW_MODE_SHOWN);
 
+	#ifdef _WIN32
 	Sleep(1000);
+	#endif
 
 	CUI_Quit();
 	return 0;
