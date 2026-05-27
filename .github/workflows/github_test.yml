@@ -8,43 +8,39 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: linux-latest
+    
+    runs-on: ubuntu-latest
 
     steps:
       - name: 1. 檢出程式碼 (Checkout)
         uses: actions/checkout@v4
 
-      - name: 2. 配置 MinGW 環境
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: UCRT64
-          update: true
-          install: >-
-            mingw-w64-ucrt-x86_64-gcc
-            mingw-w64-ucrt-x86_64-cmake
-            mingw-w64-ucrt-x86_64-ninja
+      - name: 2. 安裝 Linux 原生編譯環境與 SDL2
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build build-essential libsdl2-dev
 
       - name: 3. 檢查 SDL2 庫路徑
+      
         run: |
-          if (Test-Path "extern/SDL2/include/SDL.h") {
+          if [ -f "extern/SDL2/include/SDL.h" ]; then
             echo "SDL2 標頭檔已就緒"
-          } else {
-            echo "錯誤：找不到 SDL2 標頭檔，請確認 extern 資料夾已上傳"
-            exit 1
-          }
+          else
+            echo "警告：找不到 extern 中的 SDL2，將使用系統安裝的版本"
+          fi
 
       - name: 4. 執行 CMake 配置
         run: |
-          mkdir build
-          cd build
-          cmake -S .. -B . -G "MinGW Makefiles"
+          # 使用 Ninja 速度更快
+          cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release
 
       - name: 5. 編譯專案 (Build)
         run: |
-          cd build
-          cmake --build . --config Release
+          cmake --build build --config Release
 
       - name: 6. 執行品質測試 (Run AC Test)
         run: |
-          cd test
-          ./main_test.exe
+        
+          cd build/test
+          chmod +x ./main_test* # 確保有執行權限
+          ./main_test.exe || ./main_test
