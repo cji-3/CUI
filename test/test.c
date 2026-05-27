@@ -3,7 +3,7 @@
 
 #include "CUI.h"
 
-int main(int argc,char* argv[]) {
+int main() {
 	CUI_Init("test",50,50,640,360,CUI_INIT_WINDOW_MODE_SHOWN);
 
 	Sleep(1000);

@@ -54,7 +54,7 @@ extern uint32_t CUI_INIT_WINDOW_MODE_INPUT_GRABBED;			/**< 視窗已擷取輸入
  *
  * ---
  *
- * * `window_pos_x 視窗X座標` y座標也是一樣的：
+ * `window_pos_x 視窗X座標` y座標也是一樣的：
  *
  * - `CUI_INIT_WINDOW_POS_CENTERED`：居中
  *
