@@ -1,5 +1,8 @@
 #include<stdbool.h>
+
+#ifdef _WIN32
 #include<windows.h>
+#endif
 
 #include "CUI.h"
 
