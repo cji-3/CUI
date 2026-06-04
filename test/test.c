@@ -13,13 +13,14 @@ int main() {
 	Sleep(1000);
 	#endif
 
+	CUI_Ctnr *Ctnr=CUI_CreateCtnr(VBOX);
+
 	/*
 	預想的CUI使用過程：
 
 	建立視窗
-	建立父容器
-	於父容器中建立子容器
-	於各子容器
+	建立容器
+	於各容器放置各種元件
 	*/
 
 	CUI_Quit();
