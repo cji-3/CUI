@@ -4,7 +4,7 @@
 #include<windows.h>
 #endif
 
-#include "CUI.h"
+#include "..\include\CUI.h"
 
 int main() {
 	CUI_Init("test",50,50,640,360,CUI_INIT_WINDOW_MODE_SHOWN);
@@ -13,7 +13,7 @@ int main() {
 	Sleep(1000);
 	#endif
 
-	CUI_Ctnr *Ctnr=CUI_CreateCtnr(VBOX);
+	CUI_Ctnr* Ctnr=CUI_CreateCtnr(VBOX);
 
 	/*
 	預想的CUI使用過程：

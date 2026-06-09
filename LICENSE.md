@@ -31,7 +31,7 @@
 
 # CUI：
 
-![Logo](./document/CUI_LOGO_64x64.png)
+![Logo](./doc/CUI_LOGO_64x64.png)
 
 ## C code User Interface (UI) Function Library
 
@@ -40,7 +40,7 @@ Developed and Maintained by: CJI Corporation (Changhua County, Taiwan Province, 
 Author:
 
 - 林東頡(Lin Dong-Jie) (Nickname: CJI)
-- 賴洧霖(Lai Wei-Lin)  
+- 賴洧霖(Lai Wei-Lin)
 
 Version: 1.0.0
 

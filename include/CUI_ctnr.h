@@ -28,9 +28,9 @@ typedef enum{
  *
  * \since This function is available since CUI 1.0.0
  */
-CUI_Ctnr* CUI_CreateCtnr(CUI_CtnrMode mode);
+CUI_Ctnr* CUI_CreateCtnr(uint16_t x,uint16_t y,CUI_CtnrMode mode);
 
-void CUI_CtnrAdd(void Widgets);
+void CUI_CtnrAdd(CUI_Ctnr* ctnr,void* Widgets);
 
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus
