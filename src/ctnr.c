@@ -13,6 +13,7 @@
 //容器結構
 struct CUI_Ctnr{
 	CUI_CtnrMode mode;	/**< 方向模式 */
+	char RelativePos;	/**< 相對位置 */
 	uint16_t x;
 	uint16_t y;
 	uint16_t w;

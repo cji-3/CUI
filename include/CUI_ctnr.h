@@ -24,11 +24,23 @@ typedef enum{
 
 /**
  * \brief 創建容器
+ *
+ * 創建容器相對於
+ *
+ * 左上、中上、右上	'q'、'w'、'e'
+ *
+ * 左中、中中、右中	'a'、's'、'd'
+ *
+ * 左下、中下、右下	'z'、'x'、'c'
+ *
+ * 即鍵盤布局!
+ *
+ * \param RelativePosition 相對位置
  * \return 容器指標
  *
  * \since This function is available since CUI 1.0.0
  */
-CUI_Ctnr* CUI_CreateCtnr(uint16_t x,uint16_t y,CUI_CtnrMode mode);
+CUI_Ctnr* CUI_CtnrCreate(char RelativePos,CUI_CtnrMode mode);
 
 void CUI_CtnrAdd(CUI_Ctnr* ctnr,void* Widgets);
 

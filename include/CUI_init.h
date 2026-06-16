@@ -87,6 +87,13 @@ extern uint32_t CUI_INIT_WINDOW_MODE_INPUT_GRABBED;			/**< 視窗已擷取輸入
 int CUI_Init(const char* window_title,int window_pos_x,int window_pos_y,int window_w,int window_h,uint32_t window_mode);
 
 /**
+ * \brief 退出視窗，這將釋放所有CUI資源
+ *
+ * \since This function is available since CUI 1.0.0
+ */
+void CUI_Quit();
+
+/**
  * \brief 取得視窗寬度
  *
  * \since This function is available since CUI 1.0.0
@@ -99,13 +106,6 @@ int CUI_GetWindowWidth();
  * \since This function is available since CUI 1.0.0
  */
 int CUI_GetWindowHeight();
-
-/**
- * \brief 退出視窗，這將釋放所有CUI資源
- *
- * \since This function is available since CUI 1.0.0
- */
-void CUI_Quit();
 
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus
