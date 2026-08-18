@@ -4,11 +4,11 @@
 
 # 如何建立所需開發環境
 
--確保有cmake(3.10以上(含))
+- 確保有cmake(3.10以上(含))
 
--確保有mingw
+- 確保有mingw
 
--確保path設定
+- 確保path設定
 
 ## build step
 
