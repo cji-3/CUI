@@ -1,5 +1,1 @@
-build/
-lib/
-bin/
 .vscode
-test/main_test.exe
