@@ -9,6 +9,8 @@
 #ifndef _CUI_Ctnr_H_
 #define _CUI_Ctnr_H_
 
+#include<stdint.h>
+
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus
 extern "C" {
@@ -27,15 +29,14 @@ typedef enum{
  *
  * 創建容器相對於
  *
- * 左上、中上、右上	'q'、'w'、'e'
+ * 左上、右上	'q'、'w'
  *
- * 左中、中中、右中	'a'、's'、'd'
- *
- * 左下、中下、右下	'z'、'x'、'c'
+ * 左下、右下	'a'、's'
  *
  * 即鍵盤布局!
  *
  * \param RelativePosition 相對位置
+ * \param mode 容器模式
  * \return 容器指標
  *
  * \since This function is available since CUI 1.0.0

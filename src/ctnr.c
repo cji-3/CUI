@@ -22,13 +22,13 @@ struct CUI_Ctnr{
 };
 
 //創建容器
-CUI_Ctnr* CUI_CreateCtnr(uint16_t x,uint16_t y,CUI_CtnrMode mode){
-	CUI_Ctnr* out=(CUI_Ctnr*)malloc(sizeof(CUI_Ctnr));
-	out->x=x;
-	out->y=y;
-	out->w=0;
-	out->h=0;
-	out->mode=mode;
+CUI_Ctnr* CUI_CtnrCreate(char RelativePos,CUI_CtnrMode mode){
+	// CUI_Ctnr* out=(CUI_Ctnr*)malloc(sizeof(CUI_Ctnr));
+	// out->x=x;
+	// out->y=y;
+	// out->w=0;
+	// out->h=0;
+	// out->mode=mode;
 
-	return out;
+	// return out;
 }
