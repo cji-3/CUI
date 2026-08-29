@@ -16,38 +16,27 @@ set externPath=extern
 
 ::外部庫文件結構需符合以下格式：
 ::extern
-::├─lib0
-::│  ├─include
-::|  |  └─lib0.h
-::│  └─lib
-::|     └─liblib0.a
-::└─lib1
-::    ├─include
-::    |  └─lib1.h
-::    └─lib
-::       └─liblib1.a
+::	include
+::		lib0
+::			lib0.h
+::			lib0init.h
+::		lib1
+::			lib1.h
+::	lib
+::		lib0.a
+::		lib1.dll.a
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 if not exist "compilertmp" md compilertmp
 if not exist "!libPath!" md "!libPath!"
 if not exist "!binPath!" md "!binPath!"
 
-set hfile=-I"!includePath!"
-echo [搜尋到的include路徑] !includePath!
-
-if exist "!externPath!" (
-    for /D %%d in (!externPath!\*) do (
-        if exist "%%d\include" (
-            set hfile=!hfile! -I"%%d\include"
-            echo [搜尋到的include路徑] %%d\include
-        )
-    )
-)
+set hfile=-I"!includePath!" -I!externPath!\include
 
 set afile=
 if exist "!externPath!" (
-    for /D %%d in (!externPath!\*) do (
-        for %%f in ("%%d\lib\*.a") do (
+    for /D %%d in (!externPath!\lib) do (
+        for %%f in ("%%d\*.a") do (
             set afile=!afile! "%%f"
             echo [搜尋到的.a文件] %%f
         )
@@ -62,7 +51,7 @@ for %%f in (!srcPath!\*.c) do (
     if !errorlevel! neq 0 (
         echo [失敗] 編譯%%f的過程出錯，請檢查 GCC 輸出。
         rmdir /s /q compilertmp
-        exit /b 1
+        goto e
     )
 )
 
@@ -83,7 +72,7 @@ if !errorlevel! equ 0 (
 
     echo.
     echo [正在編譯測試程式]
-    gcc !testPath!\*.c -o "!testPath!\test.exe" !gccParam! !hfile! -L"!libPath!" -l!libAndBinFileName! !afile!
+    gcc -static !testPath!\*.c -o "!testPath!\test.exe" !gccParam! !hfile! -L"!libPath!" -l!libAndBinFileName! !afile!
     if !errorlevel! equ 0 (
         echo [成功] 測試程式編譯完成！
         echo  - 測試程式: !testPath!\test.exe
@@ -94,6 +83,7 @@ if !errorlevel! equ 0 (
     echo [失敗] 建置過程出錯，請檢查 GCC 輸出。
 )
 
+:e
 echo %CMDCMDLINE% | find /i "/c" >nul
 if !errorlevel! equ 0 (
     echo.

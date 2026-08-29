@@ -1,33 +1,19 @@
-#include<stdbool.h>
+#include <CUI.h>
+#include <stdio.h>
 
 #ifdef _WIN32
-#include<windows.h>
+#include <windows.h>
 #endif
 
-#include "..\include\CUI.h"
-
 int main(){
-	CUI_Init("test",50,50,640,360,CUI_INIT_WINDOW_MODE_SHOWN);
-	/*
-	創建容器相對於
-	左上、中上、右上	'q'、'w'、'e'
-	左中、中忠、右中	'a'、's'、'd'
-	左下、中下、右下	'z'、'x'、'c'
-	即鍵盤布局!
-	*/
-	CUI_CtnrCreate('q',VBOX);	//no def
+	CUI_Init("CUI!",640,360);
+	printf("CUI_Init(\"CUI\",640,360);\n");
 
-	#ifdef _WIN32
-	Sleep(1000);
-	#endif
+	CUI_Box *box=CUI_CreateVBox(CUI_REFBOX_Q,0,CUI_BOXHWFLAG_AUTO,CUI_BOXHWFLAG_AUTO);
+	CUI_Cell *button=CUI_CreateButton("button");
+	CUI_BoxAddCell(box,button);
 
-	/*
-	預想的CUI使用過程：
-
-	建立視窗
-	建立容器
-	於各容器放置各種元件
-	*/
+	CUI_Loop();
 
 	CUI_Quit();
 	return 0;
