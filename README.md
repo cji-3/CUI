@@ -37,4 +37,4 @@ Author:
 ## License (授權條款)
 
 This library is licensed under the **GNU Lesser General Public License v3.0** (LGPLv3).
-See the [LICENSE](LICENSE) and [LICENSE.LESSER](LICENSE.LESSER) files for details. i-Lin)
+See the [LICENSE](LICENSE) and [LICENSE.LESSER](LICENSE.LESSER) files for details.
