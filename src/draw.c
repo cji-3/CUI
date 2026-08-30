@@ -41,7 +41,7 @@
 
 //---
 
-void _drawButton(CUI_Box *box,CUI_Button *button){
+void _drawButton(const CUI_Box *box,CUI_Button *button){
 	SDL_FRect fr={box->x+GAP,box->y+GAP,button->textW+12,button->textH+12};
 	button->fr=fr;
 	_setRenderDrawColor(_renderer,button->color1);

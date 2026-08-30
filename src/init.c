@@ -30,6 +30,8 @@
 #include <CUI_box.h>
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
+#include <SDL3_image/SDL_image.h>
+
 
 // //視窗位置常數
 // int CUI_INIT_WINDOW_POS_CENTERED=SDL_WINDOWPOS_CENTERED;
@@ -62,6 +64,28 @@ CUI_Box *CUI_REFBOX_S;
 
 //初始化，創建所謂SDL的視窗和渲染器
 int CUI_Init(const char *title,int w,int h){
+	_window=SDL_CreateWindow(title,w,h,0);
+	if(!_window) return 1;
+	_renderer=SDL_CreateRenderer(_window,NULL);
+	if(!_renderer){
+		SDL_DestroyWindow(_window);
+		return 2;
+	}
+
+	//init
+	SDL_Init(SDL_INIT_AUDIO);
+	TTF_Init();
+
+	SDL_SetRenderVSync(_renderer,SDL_RENDERER_VSYNC_ADAPTIVE);
+
+	// SDL_Surface *icon=IMG_Load(iconPath);
+	// if(!icon) fprintf(stderr,"icon==NULL:%s\n",SDL_GetError());
+	// SDL_SetWindowIcon(_window,icon);
+	// SDL_DestroySurface(icon);
+
+	_font=TTF_OpenFont(DEFAUTTO_FONT_PATH,DEFAUTO_TEXT_SIZE);
+	if(!_font) fprintf(stderr,"font==NULL:%s\n",SDL_GetError());
+
 	//init
 	CLS_SetDeBug(CLS_SETDEBUG_FLAG_SING|CLS_SETDEBUG_FLAG_ERROR);
 	_boxList=CLS_Create(sizeof(CUI_Box*));
@@ -70,27 +94,7 @@ int CUI_Init(const char *title,int w,int h){
 	CUI_REFBOX_A=(CUI_Box*)malloc(sizeof(CUI_Box*));
 	CUI_REFBOX_S=(CUI_Box*)malloc(sizeof(CUI_Box*));
 
-	//init
-	SDL_Init(SDL_INIT_AUDIO);
-	TTF_Init();
-	SDL_SetRenderVSync(_renderer,SDL_RENDERER_VSYNC_ADAPTIVE);
-	_font=TTF_OpenFont(DEFAUTTO_FONT_PATH,DEFAUTO_TEXT_SIZE);
-	if(!_font) perror("font is NULL");
-
-	if(!_window && !_renderer){
-		_window=SDL_CreateWindow(title,w,h,0);
-		_renderer=SDL_CreateRenderer(_window,NULL);
-
-		return !_window || !_renderer;
-	}
-	else{
-		SDL_DestroyRenderer(_renderer);
-		SDL_DestroyWindow(_window);
-		_window=NULL;
-		_renderer=NULL;
-
-		return -1;
-	}
+	return 0;
 }
 
 //退出視窗，這將釋放所有CUI資源
