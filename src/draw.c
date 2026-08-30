@@ -19,11 +19,11 @@
  */
 
 /**
- * @file draw.c
- * @author 林東頡
- * @brief 畫畫面專用。for painting drawing use only
- * @version 1.0.0
- * @date 2026-08-25
+ * \file draw.c
+ * \author 林東頡
+ * \brief 畫畫面專用。for painting drawing use only
+ * \version 1.0.0
+ * \date 2026-08-25
  */
 
 #include <CUI_internal.h>
@@ -35,18 +35,42 @@
 
 #include <stdio.h>
 
-#define SDLCUI_SetRenderDrawColor(RENDERER,COLOR) SDL_SetRenderDrawColor(RENDERER,COLOR.r,COLOR.g,COLOR.b,COLOR.a)
-#define SDLCUI_SetFRect(FRECT,X,Y,W,H) do{FRECT.x=X; FRECT.y=Y; FRECT.w=W; FRECT.h=H;}while(0)
-#define GAP 10
+#define _setRenderDrawColor(RENDERER,COLOR) SDL_SetRenderDrawColor(RENDERER,COLOR.r,COLOR.g,COLOR.b,COLOR.a)
+#define _setFRect(FRECT,X,Y,W,H) do{(FRECT).x=X; (FRECT).y=Y; (FRECT).w=W; (FRECT).h=H;}while(0)
+#define GAP 8
+
+//---
+
+void _drawButton(CUI_Box *box,CUI_Button *button){
+	SDL_FRect fr={box->x+GAP,box->y+GAP,button->textW+12,button->textH+12};
+	button->fr=fr;
+	_setRenderDrawColor(_renderer,button->color1);
+	SDL_RenderFillRect(_renderer,&fr);
+	_setFRect(fr,fr.x+2,fr.y+2,fr.w-4,fr.h-4);
+	_setRenderDrawColor(_renderer,button->color0);
+	SDL_RenderFillRect(_renderer,&fr);
+	_setFRect(fr,fr.x+4,fr.y+4,button->textW,button->textH);
+	SDL_RenderTexture(_renderer,button->textTt,NULL,&fr);
+}
+
+//---
 
 static bool _isQuit=false;
+static bool _isDownLeft=false;
 
 void _eventTreat(){
+	_isDownLeft=false;
+
 	SDL_Event event;
 	while(SDL_PollEvent(&event)){
 		switch(event.type){
 			case SDL_EVENT_QUIT:
 				_isQuit=true;
+				break;
+			case SDL_EVENT_MOUSE_BUTTON_DOWN:
+				if(event.button.button==SDL_BUTTON_LEFT){
+					_isDownLeft=true;
+				}
 				break;
 			default:
 
@@ -58,27 +82,34 @@ void _eventTreat(){
 void _render(){
 	int i;
 	for(i=0;i<CLS_Len(_boxList);i++){
-		CUI_Box box=**(CUI_Box**)CLS_Get(_boxList,i);
-		if(box.refBox==CUI_REFBOX_Q){
-			box.x=GAP; box.y=GAP;
+		CUI_Box *box=*(CUI_Box**)CLS_Get(_boxList,i);
+		CLS_List *boxDeCellList=box->cellList;
+
+		/*box位置處理*/
+		if(box->refBox==CUI_REFBOX_Q){
+			box->x=0; box->y=0;
 		}
 
-		CLS_List *boxDeCellList=box.cellList;
 		int j;
 		for(j=0;j<CLS_Len(boxDeCellList);j++){
-			CUI_Cell cell=**(CUI_Cell**)CLS_Get(boxDeCellList,j);
-			switch(cell.type){
+			CUI_Cell *cell=*(CUI_Cell**)CLS_Get(boxDeCellList,j);
+
+			switch(cell->type){
 				case CUI_CELLTYPE_LABEL:
 
 					break;
 				case CUI_CELLTYPE_BUTTON:{
-					CUI_Button button=cell._struct.button;
-					SDL_FRect fr={box.x,box.y,button.w,button.h};
-					SDLCUI_SetRenderDrawColor(_renderer,button.color1);
-					SDL_RenderFillRect(_renderer,&fr);
-					SDLCUI_SetFRect(fr,fr.x+2,fr.y+2,fr.w-2,fr.h-2);
-					SDLCUI_SetRenderDrawColor(_renderer,button.color0);
-					SDL_RenderFillRect(_renderer,&fr);
+					CUI_Button button=cell->_struct.button;
+
+					_drawButton(box,&button);
+
+					if(_isDownLeft && button.clickLib){
+						SDL_FPoint mp;
+						SDL_GetMouseState(&mp.x,&mp.y);
+						if(SDL_PointInRectFloat(&mp,&button.fr)){
+							button.clickLib(cell);
+						}
+					}
 
 					break;
 				}
@@ -95,7 +126,7 @@ void _render(){
 
 void CUI_Loop(){
 	while(!_isQuit){
-		SDL_SetRenderDrawColor(_renderer,150,150,150,255);
+		SDL_SetRenderDrawColor(_renderer,100,100,100,255);
 		SDL_RenderClear(_renderer);
 
 		_eventTreat();

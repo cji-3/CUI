@@ -19,11 +19,11 @@
  */
 
 /**
- * @file CUI_other.h
- * @author 林東頡
- * @brief 雜項。other.
- * @version 1.0.0
- * @date 2026-08-26
+ * \file CUI_other.h
+ * \author 林東頡
+ * \brief 雜項。other.
+ * \version 1.0.0
+ * \date 2026-08-26
  */
 
 #ifndef _CUI_OTHER_H_

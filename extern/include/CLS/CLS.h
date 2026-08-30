@@ -1,9 +1,9 @@
 /**
- * @file CLS.h(undone)
- * @author 林東頡
- * @brief 標頭
- * @version 1.0.0
- * @date 2026-05-04
+ * \file CLS.h(undone)
+ * \author 林東頡
+ * \brief 標頭
+ * \version 1.0.0
+ * \date 2026-05-04
  */
 
 #ifndef _CLS_H_
@@ -135,7 +135,7 @@ size_t CLS_Len(CLS_List* list);
 void CLS_Clear(CLS_List* list);
 
 /**
- * @brief DEBUG旗標
+ * \brief DEBUG旗標
  *
  * \version 1.1.0
  */

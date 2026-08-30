@@ -19,11 +19,11 @@
  */
 
 /**
- * @file CUI_init.h
- * @author 林東頡
- * @brief 初始化庫。 initialize library.
- * @version 1.0.0
- * @date 2026-04-30
+ * \file CUI_init.h
+ * \author 林東頡
+ * \brief 初始化庫。 initialize library.
+ * \version 1.0.0
+ * \date 2026-04-30
  */
 
 #ifndef _CUI_INIT_H_

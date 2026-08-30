@@ -76,6 +76,9 @@ if !errorlevel! equ 0 (
     if !errorlevel! equ 0 (
         echo [成功] 測試程式編譯完成！
         echo  - 測試程式: !testPath!\test.exe
+        echo.
+        echo ----------test.exe----------
+        !testPath!\test.exe
     ) else (
         echo [失敗] 測試程式編譯過程出錯，請檢查 GCC 輸出。
     )

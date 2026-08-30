@@ -19,11 +19,11 @@
  */
 
 /**
- * @file CUI.h
- * @author 林東頡
- * @brief 此作為整合各標頭檔之用途。This Is Used For Integrating Various Header Files.
- * @version 1.0.0
- * @date 2026-04-30
+ * \file CUI.h
+ * \author 林東頡
+ * \brief 此作為整合各標頭檔之用途。This Is Used For Integrating Various Header Files.
+ * \version 1.0.0
+ * \date 2026-04-30
  */
 
 /*

@@ -19,11 +19,11 @@
  */
 
 /**
- * @file CUI_draw.h
- * @author 林東頡
- * @brief 畫畫面專用。for painting drawing use only
- * @version 1.0.0
- * @date 2026-08-25
+ * \file CUI_draw.h
+ * \author 林東頡
+ * \brief 畫畫面專用。for painting drawing use only
+ * \version 1.0.0
+ * \date 2026-08-25
  */
 
 #ifndef _CUI_DRAW_H_

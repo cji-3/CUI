@@ -19,11 +19,11 @@
  */
 
 /**
- * @file cell.h
- * @author 林東頡
- * @brief 元素、元件。cell、component.
- * @version 1.0.0
- * @date 2026-08-26
+ * \file cell.h
+ * \author 林東頡
+ * \brief 元素、元件。cell、component.
+ * \version 1.0.0
+ * \date 2026-08-26
  */
 
 /*
@@ -69,16 +69,17 @@ typedef struct{
 }CUI_Label;
 
 typedef struct{
-	int w;						/**< 寬 */
-	int h;						/**< 高 */
 	const char *text;			/**< 文字 */
+	SDL_FRect fr;				/**< 範圍 */
 	SDL_Texture *textTt;
-	int text_size;				/**< 文字大小 */
+	int textW;
+	int textH;
+	int textSize;				/**< 文字大小 */
 	CUI_Color color0;			/**< 前景色(RGBA8888) */
 	CUI_Color color1;			/**< 背景色(RGBA8888) */
 	CUI_Color colorT;			/**< 文字顏色(RGBA8888) */
 	bool show;					/**< 是否顯示 */
-	// void (*eventClickLib)(void*);
+	void (*clickLib)(CUI_Cell*);
 }CUI_Button;
 
 typedef struct{
@@ -107,7 +108,8 @@ typedef struct CUI_Cell{
 
 //---
 
-CUI_Cell *CUI_CreateButton(char *text);
+CUI_Cell *CUI_CreateButton(char *text,void (*clickLib)(CUI_Cell*));
+void CUI_SetButtonText(CUI_Cell *button,const char *text);
 CUI_Cell *CUI_CreateBlock(int w,int h);
 
 //設定C函數定義，使使用C++時也是如此
@@ -130,5 +132,3 @@ CUI_Cell *CUI_CreateBlock(int w,int h);
 //	void *other;				/**< 其他 */
 //	const char *font_path;		/**< 字體檔案(.ttf)路徑 */
 //	const char *image_path;		/**< 圖片路徑 */
-//#define CUI_TEXT_SIZE_DEFAULT 16	/**< 文字大小預設值 */
-//#define CUI_FONT_PATH_DEFAULT "C:\\Windows\\Fonts\\Arial\\arial.ttf"	/**< 字體檔案(.ttf)路徑預設值 */

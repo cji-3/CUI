@@ -19,11 +19,11 @@
  */
 
 /**
- * @file box.c
- * @author 林東頡
- * @brief 容器庫實作。Box library implementation.
- * @version 1.0.0
- * @date 2026-05-04
+ * \file box.c
+ * \author 林東頡
+ * \brief 容器庫實作。Box library implementation.
+ * \version 1.0.0
+ * \date 2026-05-04
  */
 
 #include <CUI_internal.h>
@@ -31,14 +31,12 @@
 #include <CUI_cell.h>
 #include <stdlib.h>
 
-CUI_Box *CUI_CreateVBox(CUI_Box *refBox,char refBoxPos,CUI_BoxWHFlag w,CUI_BoxWHFlag h){
+CUI_Box *CUI_CreateVBox(CUI_Box *refBox,CUI_RefBoxVH refBoxPos,CUI_BoxWHFlag high,int *alignwScale){
 	CUI_Box *out=(CUI_Box*)malloc(sizeof(CUI_Box));
 	out->refBox=refBox;
 	out->refBoxPos=refBoxPos;
-	out->show_w=w;
-	out->show_h=h;
-	out->w=0;
-	out->h=0;
+	out->h=high;
+	out->alignwScale=alignwScale;
 	out->cellList=CLS_Create(sizeof(CUI_Cell*));
 	CLS_Psh(_boxList,&out);
 	return out;

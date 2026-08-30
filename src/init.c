@@ -19,11 +19,11 @@
  */
 
 /**
- * @file CUI.c
- * @author 林東頡
- * @brief 初始化實作。init implementation.
- * @version 1.0.0
- * @date 2026-04-30
+ * \file CUI.c
+ * \author 林東頡
+ * \brief 初始化實作。init implementation.
+ * \version 1.0.0
+ * \date 2026-04-30
  */
 
 #include <CUI_internal.h>
@@ -73,7 +73,7 @@ int CUI_Init(const char *title,int w,int h){
 	//init
 	SDL_Init(SDL_INIT_AUDIO);
 	TTF_Init();
-	SDL_SetRenderVSync(_renderer,1);
+	SDL_SetRenderVSync(_renderer,SDL_RENDERER_VSYNC_ADAPTIVE);
 	_font=TTF_OpenFont(DEFAUTTO_FONT_PATH,DEFAUTO_TEXT_SIZE);
 	if(!_font) perror("font is NULL");
 
@@ -100,6 +100,7 @@ void CUI_Quit(){
 	free(CUI_REFBOX_W);
 	free(CUI_REFBOX_A);
 	free(CUI_REFBOX_S);
+	TTF_CloseFont(_font);
 	SDL_DestroyRenderer(_renderer);
 	SDL_DestroyWindow(_window);
 	SDL_Quit();
