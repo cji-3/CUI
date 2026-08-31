@@ -41,8 +41,8 @@
 
 //---
 
-void _drawButton(const CUI_Box *box,CUI_Button *button){
-	SDL_FRect fr={box->x+GAP,box->y+GAP,button->textW+12,button->textH+12};
+void _drawButton(CUI_Button *button,SDL_FPoint pos){
+	SDL_FRect fr={pos.x,pos.y,button->textW+12,button->textH+12};
 	button->fr=fr;
 	_setRenderDrawColor(_renderer,button->color1);
 	SDL_RenderFillRect(_renderer,&fr);
@@ -87,11 +87,13 @@ void _render(){
 
 		/*box位置處理*/
 		if(box->refBox==CUI_REFBOX_Q){
-			box->x=0; box->y=0;
+			box->fr.x=0; box->fr.y=0;
+			box->fr.w=0; box->fr.h=0;
 		}
 
+		int boxDeCellNum=CLS_Len(boxDeCellList);
 		int j;
-		for(j=0;j<CLS_Len(boxDeCellList);j++){
+		for(j=0;j<boxDeCellNum;j++){
 			CUI_Cell *cell=*(CUI_Cell**)CLS_Get(boxDeCellList,j);
 
 			switch(cell->type){
@@ -101,7 +103,23 @@ void _render(){
 				case CUI_CELLTYPE_BUTTON:{
 					CUI_Button button=cell->_struct.button;
 
-					_drawButton(box,&button);
+					SDL_FPoint pos;
+					if(box->vhFlag==CUI_BOXVH_V){
+						if(box->wOrH==CUI_BOXHWFLAG_MIN){
+							if(j==0){
+								pos.x=box->fr.x+GAP;
+								pos.y=box->fr.y+GAP;
+							}
+							else{
+								pos.x=box->fr.x+GAP;
+								pos.y=box->fr.h + box->fr.y + GAP;
+							}
+							_drawButton(&button,pos);
+							box->fr.h=button.fr.h+button.fr.y;
+						}
+					}
+
+
 
 					if(_isDownLeft && button.clickLib){
 						SDL_FPoint mp;

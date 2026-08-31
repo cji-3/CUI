@@ -1,5 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
+chcp 65001
 
 :::::::::::::::::::: user set ::::::::::::::::::::::
 ::此檔案須放在專案根目錄

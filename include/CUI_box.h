@@ -32,6 +32,7 @@
 #include <CLS/CLS.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <SDL3/SDL.h>
 
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus
@@ -57,13 +58,17 @@ typedef enum{
 	CUI_BOXHWFLAG_MAX=-3,		/**< 最大寬度或高度，根據視窗大小 */
 }CUI_BoxWHFlag;
 
+typedef enum{
+	CUI_BOXVH_V,
+	CUI_BOXVH_H,
+}CUI_BoxVH;
+
 typedef struct CUI_Box{
 	CUI_Box *refBox;			/**< 要相對於那個容器 */
 	char refBoxPos;
-	CUI_BoxWHFlag w;			/**< 顯示的寬 */
-	CUI_BoxWHFlag h;			/**< 顯示的高 */
-	float x;
-	float y;
+	CUI_BoxWHFlag wOrH;			/**< 顯示的高 */
+	CUI_BoxVH vhFlag;
+	SDL_FRect fr;
 	bool show;
 	int *alignwScale;
 	CLS_List *cellList;			/**< 存放容器內的元件列表(CUI_Cell**) */
@@ -89,7 +94,10 @@ CUI_Box *CUI_CreateVBox(CUI_Box *refBox,CUI_RefBoxVH refBoxPos,CUI_BoxWHFlag hig
  * \since This function is available since CUI 1.0.0
  */
 CUI_Box *CUI_CreateHBox(CUI_Box *refBox,CUI_RefBoxVH refBoxPos,CUI_BoxWHFlag width);
+
 void CUI_BoxAddCell(CUI_Box *box,CUI_Cell *cell);
+
+int CUI_GetBoxDeCellNum(CUI_Box *box);
 
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus
