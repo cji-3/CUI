@@ -39,7 +39,7 @@
 extern "C" {
 #endif
 
-typedef struct CUI_Cell CUI_Cell;
+typedef void CUI_Cell;
 typedef struct CUI_Box CUI_Box;
 
 typedef enum{

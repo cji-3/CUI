@@ -95,13 +95,12 @@ void _render(){
 		int j;
 		for(j=0;j<boxDeCellNum;j++){
 			CUI_Cell *cell=*(CUI_Cell**)CLS_Get(boxDeCellList,j);
-
-			switch(cell->type){
+			switch(*(CUI_CellType*)cell){
 				case CUI_CELLTYPE_LABEL:
 
 					break;
 				case CUI_CELLTYPE_BUTTON:{
-					CUI_Button button=cell->_struct.button;
+					CUI_Button *button=(CUI_Button*)cell;
 
 					SDL_FPoint pos;
 					if(box->vhFlag==CUI_BOXVH_V){
@@ -114,18 +113,20 @@ void _render(){
 								pos.x=box->fr.x+GAP;
 								pos.y=box->fr.h + box->fr.y + GAP;
 							}
-							_drawButton(&button,pos);
-							box->fr.h=button.fr.h+button.fr.y;
+							_drawButton(button,pos);
+							box->fr.h=button->fr.h+button->fr.y;
 						}
 					}
+					//HBox
+					else{
 
+					}
 
-
-					if(_isDownLeft && button.clickLib){
+					if(_isDownLeft && button->clickLib){
 						SDL_FPoint mp;
 						SDL_GetMouseState(&mp.x,&mp.y);
-						if(SDL_PointInRectFloat(&mp,&button.fr)){
-							button.clickLib(cell);
+						if(SDL_PointInRectFloat(&mp,&button->fr)){
+							button->clickLib(button);
 						}
 					}
 

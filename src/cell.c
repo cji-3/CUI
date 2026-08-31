@@ -35,38 +35,46 @@ const CUI_Color DEFAUTO_COLOR0={150,150,150,255};
 const CUI_Color DEFAUTO_COLOR1={0,0,0,255};
 const CUI_Color DEFAUTO_COLORT={0,0,0,255};
 
-CUI_Cell *CUI_CreateButton(char *text,void (*clickLib)(CUI_Cell*)){
-	CUI_Cell *out=(CUI_Cell*)malloc(sizeof(CUI_Cell));
+CUI_Button *CUI_CreateButton(char *text,void (*clickLib)(CUI_Button*)){
+	CUI_Button *out=(CUI_Button*)malloc(sizeof(CUI_Button));
 	out->type=CUI_CELLTYPE_BUTTON;
-	out->_struct.button.text=text;
-	out->_struct.button.textSize=DEFAUTO_TEXT_SIZE;
-	out->_struct.button.color0=DEFAUTO_COLOR0;
-	out->_struct.button.color1=DEFAUTO_COLOR1;
-	out->_struct.button.colorT=DEFAUTO_COLORT;
-	out->_struct.button.show=true;
-	out->_struct.button.clickLib=clickLib;
+	out->text=text;
+	out->textSize=DEFAUTO_TEXT_SIZE;
+	out->color0=DEFAUTO_COLOR0;
+	out->color1=DEFAUTO_COLOR1;
+	out->colorT=DEFAUTO_COLORT;
+	out->show=true;
+	out->clickLib=clickLib;
 
+	//文字貼圖,寬高之處理
 	SDL_Surface *textSf=TTF_RenderText_Blended(_font,text,0,DEFAUTO_COLORT);
 	SDL_Texture *textTt=SDL_CreateTextureFromSurface(_renderer,textSf);
 	SDL_DestroySurface(textSf);
-	out->_struct.button.textW=textTt->w;
-	out->_struct.button.textH=textTt->h;
-	out->_struct.button.textTt=textTt;
+	out->textW=textTt->w;
+	out->textH=textTt->h;
+	out->textTt=textTt;
 
 	return out;
 }
 
-void CUI_SetButtonText(CUI_Cell *button,const char *text){
-	if(button->type!=CUI_CELLTYPE_BUTTON){
-		fprintf(stderr,"%s:button not button",__func__);
-		return;
-	}
-
-	button->_struct.button.text=text;
+void CUI_SetButtonText(CUI_Button *button,const char *text){
+	button->text=text;
 	SDL_Surface *textSf=TTF_RenderText_Blended(_font,text,0,DEFAUTO_COLORT);
 	SDL_Texture *textTt=SDL_CreateTextureFromSurface(_renderer,textSf);
 	SDL_DestroySurface(textSf);
-	button->_struct.button.textW=textTt->w;
-	button->_struct.button.textH=textTt->h;
-	button->_struct.button.textTt=textTt;
+	button->textW=textTt->w;
+	button->textH=textTt->h;
+	button->textTt=textTt;
+}
+
+int CUI_ButtonRenew(CUI_Button *button){
+	//文字貼圖,寬高之處理
+	SDL_Surface *textSf=TTF_RenderText_Blended(_font,button->text,0,DEFAUTO_COLORT);
+	SDL_Texture *textTt=SDL_CreateTextureFromSurface(_renderer,textSf);
+	SDL_DestroySurface(textSf);
+	button->textW=textTt->w;
+	button->textH=textTt->h;
+	button->textTt=textTt;
+
+	return 0;
 }
