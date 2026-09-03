@@ -36,7 +36,7 @@ CUI_Box *CUI_CreateVBox(CUI_Box *refBox,CUI_RefBoxVH refBoxPos,CUI_BoxWHFlag hig
 	out->refBox=refBox;
 	out->refBoxPos=refBoxPos;
 	out->wOrH=high;
-	out->alignwScale=alignwScale;
+	out->alignwScaleList=alignwScale;
 	out->vhFlag=CUI_BOXVH_V;
 	out->cellList=CLS_Create(sizeof(CUI_Cell*));
 	CLS_Psh(_boxList,&out);

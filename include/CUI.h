@@ -50,5 +50,6 @@ CUI_WINDOW_XY_MIDDLE
 #include <CUI_box.h>
 #include <CUI_cell.h>
 #include <CUI_other.h>
+#include <CUI_debug.h>
 
 #endif

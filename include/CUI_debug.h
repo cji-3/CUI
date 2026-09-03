@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2026 cji-3
  *
@@ -19,42 +20,22 @@
  */
 
 /**
- * \file CUI_internal.h
- * 此檔案不該發布!!!
+ * \file CUI_debug.h
  * \author 林東頡
- * \brief 內部專用。Internal.
+ * \brief 方便用戶debug。
  * \version 1.0.0
- * \date 2026-08-25
+ * \date 2026-08-26
  */
 
-#ifndef _CUI_Internal_H_
-#define _CUI_Internal_H_
-
-#include <CLS/CLS.h>
-#include <SDL3/SDL.h>
-#include <SDL3_ttf/SDL_ttf.h>
-#include <CUI_box.h>
-#include <CUI_debug.h>
-#include <stdbool.h>
-
-#include <stdio.h>
-
-#define DEFAUTO_TEXT_SIZE 16
-
-extern SDL_Window *_window;
-extern SDL_Renderer *_renderer;
-extern CLS_List *_boxList;
-extern TTF_Font *_font;
-extern bool _debugShowBoxKnow;
-extern CUI_Box *CUI_REFBOX_Q;
-extern CUI_Box *CUI_REFBOX_W;
-extern CUI_Box *CUI_REFBOX_A;
-extern CUI_Box *CUI_REFBOX_S;
+#ifndef _CUI_DEBUG_H_
+#define _CUI_DEBUG_H_
 
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+void CUI_DebugShowBoxKnow();
 
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus

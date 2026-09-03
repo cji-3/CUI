@@ -51,16 +51,14 @@
 
 #define DEFAUTTO_FONT_PATH "C:/windows/fonts/msjh.ttc"
 
-//靜態變數宣告，這些是函式全域可用的，它們透過CUI_internal.h來標記它們屬於外部變數
-SDL_Window *_window=NULL;		/**< 存放window指標 */
-SDL_Renderer *_renderer=NULL;	/**< 存放renderer指標 */
-CLS_List *_boxList=NULL;		/**< 容器列表(CUI_Box**) */
+SDL_Window *_window=NULL;
+SDL_Renderer *_renderer=NULL;
+CLS_List *_boxList=NULL;
 TTF_Font *_font=NULL;
-
-CUI_Box *CUI_REFBOX_Q;
-CUI_Box *CUI_REFBOX_W;
-CUI_Box *CUI_REFBOX_A;
-CUI_Box *CUI_REFBOX_S;
+CUI_Box *CUI_REFBOX_Q=NULL;
+CUI_Box *CUI_REFBOX_W=NULL;
+CUI_Box *CUI_REFBOX_A=NULL;
+CUI_Box *CUI_REFBOX_S=NULL;
 
 //初始化，創建所謂SDL的視窗和渲染器
 int CUI_Init(const char *title,int w,int h){

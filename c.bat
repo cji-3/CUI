@@ -1,10 +1,12 @@
 @echo off
 setlocal enabledelayedexpansion
+cls
 chcp 65001
 
-:::::::::::::::::::: user set ::::::::::::::::::::::
-::此檔案須放在專案根目錄
-::此批次檔會編譯出靜態庫和動態庫以及測試程式，測試程式是連結lib中的靜態庫。
+:::::::::::::::::::: user set ::::::::::::::::::::
+:: 此檔案須放在專案根目錄
+:: 此批次檔會編譯出靜態庫和動態庫以及測試程式
+:: 測試程式是連結lib中的靜態庫
 
 set srcPath=src
 set includePath=include
@@ -15,9 +17,9 @@ set testPath=test
 set gccParam=-Wall -std=c99 -O0
 set externPath=extern
 
-::外部庫文件結構需符合以下格式：
-::extern
-::	include
+:: 外部庫文件結構需符合以下格式：
+:: extern
+:: 	include
 ::		lib0
 ::			lib0.h
 ::			lib0init.h
@@ -26,7 +28,7 @@ set externPath=extern
 ::	lib
 ::		lib0.a
 ::		lib1.dll.a
-::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 if not exist "compilertmp" md compilertmp
 if not exist "!libPath!" md "!libPath!"
@@ -62,8 +64,6 @@ ar rcs "!libPath!\lib!libAndBinFileName!.a" compilertmp\*.o
 echo [正在編譯動態庫 .dll]
 gcc -shared !gccParam! !hfile! -o "!binPath!\!libAndBinFileName!.dll" compilertmp\*.o !afile! -Wl,--out-implib,"!libPath!\lib!libAndBinFileName!.dll.a"
 
-rmdir /s /q compilertmp
-
 echo.
 if !errorlevel! equ 0 (
     echo [成功] 建置完成！
@@ -87,7 +87,9 @@ if !errorlevel! equ 0 (
     echo [失敗] 建置過程出錯，請檢查 GCC 輸出。
 )
 
+
 :e
+rmdir /s /q compilertmp
 echo %CMDCMDLINE% | find /i "/c" >nul
 if !errorlevel! equ 0 (
     echo.

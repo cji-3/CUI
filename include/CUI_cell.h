@@ -19,7 +19,7 @@
  */
 
 /**
- * \file cell.h
+ * \file CUI_cell.h
  * \author 林東頡
  * \brief 元素、元件。cell、component.
  * \version 1.0.0
@@ -55,10 +55,15 @@ typedef enum CUI_CellType{
 	CUI_CELLTYPE_BLOCK
 }CUI_CellType;
 
+typedef struct CUI_CellCom{
+	CUI_CellType type;				/**< 類型 */
+	SDL_FRect fr;					/**< 範圍。除非你知道你在幹麻，否則別碰 */
+}CUI_CellCom;
+
 //---
 
 typedef struct CUI_Label{
-	CUI_CellType type;			/**< 類型 */
+	CUI_CellCom com;
 	int w;						/**< 寬 */
 	int h;						/**< 高 */
 	const char *text;			/**< 文字 */
@@ -71,9 +76,8 @@ typedef struct CUI_Label{
 
 typedef struct CUI_Button CUI_Button;
 typedef struct CUI_Button{
-	CUI_CellType type;				/**< 類型 */
+	CUI_CellCom com;
 	const char *text;				/**< 文字 */
-	SDL_FRect fr;					/**< 範圍。除非你知道你在幹麻，否則別碰 */
 	SDL_Texture *textTt;			/**< 除非你知道你在幹麻，否則別碰 */
 	int textW;						/**< 文字寬度。除非你知道你在幹麻，否則別碰 */
 	int textH;						/**< 文字高度。除非你知道你在幹麻，否則別碰 */
@@ -86,7 +90,7 @@ typedef struct CUI_Button{
 }CUI_Button;
 
 typedef struct CUI_Block{
-	CUI_CellType type;			/**< 類型 */
+	CUI_CellCom com;
 	int w;						/**< 寬 */
 	int h;						/**< 高 */
 	CUI_Color color0;			/**< 前景色(RGBA8888) */
@@ -101,8 +105,6 @@ typedef void CUI_Cell;
 //---
 
 CUI_Button *CUI_CreateButton(char *text,void (*clickLib)(CUI_Button*));
-
-void CUI_SetButtonText(CUI_Button *button,const char *text);
 
 CUI_Block *CUI_CreateBlock(int w,int h);
 
