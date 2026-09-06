@@ -49,8 +49,6 @@
 
 //---
 
-#define DEFAUTTO_FONT_PATH "C:/windows/fonts/msjh.ttc"
-
 SDL_Window *_window=NULL;
 SDL_Renderer *_renderer=NULL;
 CLS_List *_boxList=NULL;

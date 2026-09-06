@@ -31,7 +31,7 @@
 #include <CUI_cell.h>
 #include <stdlib.h>
 
-CUI_Box *CUI_CreateVBox(CUI_Box *refBox,CUI_RefBoxVH refBoxPos,CUI_BoxWHFlag high,int *alignwScale){
+CUI_Box *CUI_NewVBox(CUI_Box *refBox,CUI_RefBoxVH refBoxPos,CUI_BoxWHFlag high,int *alignwScale){
 	CUI_Box *out=(CUI_Box*)malloc(sizeof(CUI_Box));
 	out->refBox=refBox;
 	out->refBoxPos=refBoxPos;

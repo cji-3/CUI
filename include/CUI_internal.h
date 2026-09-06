@@ -40,6 +40,7 @@
 #include <stdio.h>
 
 #define DEFAUTO_TEXT_SIZE 16
+#define DEFAUTTO_FONT_PATH "C:/windows/fonts/msjh.ttc"
 
 extern SDL_Window *_window;
 extern SDL_Renderer *_renderer;

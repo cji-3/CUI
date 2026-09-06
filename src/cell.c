@@ -35,7 +35,7 @@ const CUI_Color DEFAUTO_COLOR0={150,150,150,255};
 const CUI_Color DEFAUTO_COLOR1={0,0,0,255};
 const CUI_Color DEFAUTO_COLORT={0,0,0,255};
 
-CUI_Button *CUI_CreateButton(char *text,void (*clickLib)(CUI_Button*)){
+CUI_Button *CUI_NewButton(char *text,void (*clickLib)(CUI_Button*)){
 	CUI_Button *out=(CUI_Button*)malloc(sizeof(CUI_Button));
 	out->com.type=CUI_CELLTYPE_BUTTON;
 	out->text=text;
@@ -60,18 +60,32 @@ CUI_Button *CUI_CreateButton(char *text,void (*clickLib)(CUI_Button*)){
 	return out;
 }
 
-int CUI_ButtonRenew(CUI_Button *button){
-	SDL_DestroyTexture(button->textTt);
-	//文字貼圖,寬高之處理
-	SDL_Surface *textSf=TTF_RenderText_Blended(_font,button->text,0,DEFAUTO_COLORT);
-	SDL_Texture *textTt=SDL_CreateTextureFromSurface(_renderer,textSf);
-	SDL_DestroySurface(textSf);
-	button->textW=textTt->w;
-	button->textH=textTt->h;
-	button->textTt=textTt;
+int CUI_RenewCell(CUI_Cell *cell){
+	switch(*(CUI_CellType*)cell){
+		case CUI_CELLTYPE_LABEL:
 
-	button->com.fr.w=textTt->w+12;
-	button->com.fr.h=textTt->h+12;
+			break;
+		case CUI_CELLTYPE_BUTTON:{
+			CUI_Button *button=(CUI_Button*)cell;
+
+			SDL_DestroyTexture(button->textTt);
+			//文字貼圖,寬高之處理
+			SDL_Surface *textSf=TTF_RenderText_Blended(_font,button->text,0,DEFAUTO_COLORT);
+			SDL_Texture *textTt=SDL_CreateTextureFromSurface(_renderer,textSf);
+			SDL_DestroySurface(textSf);
+			button->textW=textTt->w;
+			button->textH=textTt->h;
+			button->textTt=textTt;
+
+			button->com.fr.w=textTt->w+12;
+			button->com.fr.h=textTt->h+12;
+
+			break;
+		}
+		default:
+
+			break;
+	}
 
 	return 0;
 }

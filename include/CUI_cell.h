@@ -104,23 +104,20 @@ typedef void CUI_Cell;
 
 //---
 
-CUI_Button *CUI_CreateButton(char *text,void (*clickLib)(CUI_Button*));
-
-CUI_Block *CUI_CreateBlock(int w,int h);
+CUI_Button *CUI_NewButton(char *text,void (*clickLib)(CUI_Button*));
 
 /**
- * @brief 當你利用CUI_Button指標更改屬性時，需要呼叫此函式更新。
+ * @brief 當你利用CUI_Button等指標更改屬性時，需要呼叫此函式更新。
  * 如:
  * ```
  * button->text=":)";
- * CUI_ButtonRenew(button);
+ * CUI_RenewCell(button);
  * ```
  *
- * @param button
+ * @param cell
  * @return int 失敗時回傅非0，這意味著你可能更改到你不該改的東西。
  */
-int CUI_ButtonRenew(CUI_Button *button);
-
+int CUI_RenewCell(CUI_Cell *cell);
 
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus

@@ -56,16 +56,15 @@ void _drawButton(CUI_Button *button,SDL_FPoint pos){
 	SDL_RenderTexture(_renderer,button->textTt,NULL,&fr);
 }
 
-int _intListSum(int n,int *list){
-	int out=0,i;
-	for(i=0;i<n;i++) out+=list[i];
+int _intArrSum(int n,int *arr){
+	int out=0;
+	for(int i=0;i<n;i++) out+=arr[i];
 	return out;
 }
 
-float _floatListSum(int n,float *list){
+float _floatArrSum(int n,float *arr){
 	float out=0;
-	int i;
-	for(i=0;i<n;i++) out+=list[i];
+	for(int i=0;i<n;i++) out+=arr[i];
 	return out;
 }
 
@@ -96,9 +95,8 @@ void _eventTreat(){
 }
 
 void _render(){
-	int i;
-	for(i=0;i<CLS_Len(_boxList);i++){//i在這裡代表處理到第幾個box
-		CUI_Box *box=*(CUI_Box**)CLS_Get(_boxList,i);
+	for(int boxIndex=0;boxIndex<CLS_Len(_boxList);boxIndex++){	//i在這裡代表處理到第幾個box
+		CUI_Box *box=*(CUI_Box**)CLS_Get(_boxList,boxIndex);
 		CLS_List *boxDeCellList=box->cellList;
 
 		/*box位置處理*/
@@ -108,11 +106,10 @@ void _render(){
 		}
 
 		int boxDeCellListLen=CLS_Len(boxDeCellList);
-		int j;
-		for(j=0;j<boxDeCellListLen;j++){	//j在這裡代表處理到box中的第幾個cell
-			CUI_Cell *cell=*(CUI_Cell**)CLS_Get(boxDeCellList,j);
+		for(int cellIndex=0;cellIndex<boxDeCellListLen;cellIndex++){	//j在這裡代表處理到box中的第幾個cell
+			CUI_Cell *cell=*(CUI_Cell**)CLS_Get(boxDeCellList,cellIndex);
 
-			switch(*(CUI_CellType*)cell){	//第一個成員都是type
+			switch(*(CUI_CellType*)cell){	//第一個成員都是type(cell->com.type)
 				case CUI_CELLTYPE_LABEL:
 
 					break;
@@ -123,13 +120,13 @@ void _render(){
 					if(box->vhFlag==CUI_BOXVH_V){	//VBox
 						if(box->wOrH==CUI_BOXWHFLAG_MIN){
 							pos.x=box->fr.x+GAP;
-							if(j==0) pos.y=box->fr.y+GAP;
+							if(cellIndex==0) pos.y=box->fr.y+GAP;
 							else pos.y=box->fr.h + box->fr.y + GAP;
 
 							if(button->com.fr.w+2*GAP>box->fr.w) box->fr.w=button->com.fr.w+2*GAP;
 							box->fr.h=button->com.fr.h+button->com.fr.y+GAP;
 						}
-						else if(box->wOrH==CUI_BOXWHFLAG_MAX){
+						else if(box->wOrH==CUI_BOXWHFLAG_WIN){
 							int *asl=box->alignwScaleList;	//alignwScaleList 對齊比例列表
 							if(!asl){
 								asl=(int*)malloc(boxDeCellListLen*sizeof(int));
@@ -145,17 +142,16 @@ void _render(){
 
 							//取得box裡的所有cell的高和y座標
 							float cellHArr[boxDeCellListLen],cellYArr[boxDeCellListLen];
-							int k;
-							for(k=0;k<boxDeCellListLen;k++){
-								cellHArr[k]=(*(CUI_Button**)CLS_Get(boxDeCellList,k))->com.fr.h;
-								cellYArr[k]=(*(CUI_Button**)CLS_Get(boxDeCellList,k))->com.fr.y;
+							for(int i=0;i<boxDeCellListLen;i++){
+								cellHArr[i]=(*(CUI_Button**)CLS_Get(boxDeCellList,i))->com.fr.h;
+								cellYArr[i]=(*(CUI_Button**)CLS_Get(boxDeCellList,i))->com.fr.y;
 							}
 
-							float cellHSum=_floatListSum(boxDeCellListLen,cellHArr);
-							int aslSum=_intListSum(boxDeCellListLen+1,asl);
+							float cellHSum=_floatArrSum(boxDeCellListLen,cellHArr);
+							int aslSum=_intArrSum(boxDeCellListLen+1,asl);
 							if(!aslSum) aslSum=1;
-							float cellUpGap=((float)asl[j]/aslSum)*(winH-((boxDeCellListLen+1)*GAP+cellHSum));
-							pos.y=GAP+cellUpGap+((j==0)?0:cellYArr[j-1]+cellHArr[j-1]);
+							float cellUpGap=((float)asl[cellIndex]/aslSum)*(winH-((boxDeCellListLen+1)*GAP+cellHSum));
+							pos.y=GAP+cellUpGap+((cellIndex==0)?0:cellYArr[cellIndex-1]+cellHArr[cellIndex-1]);
 						}
 						_drawButton(button,pos);
 					}
