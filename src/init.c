@@ -53,10 +53,7 @@ SDL_Window *_window=NULL;
 SDL_Renderer *_renderer=NULL;
 CLS_List *_boxList=NULL;
 TTF_Font *_font=NULL;
-CUI_Box *CUI_REFBOX_Q=NULL;
-CUI_Box *CUI_REFBOX_W=NULL;
-CUI_Box *CUI_REFBOX_A=NULL;
-CUI_Box *CUI_REFBOX_S=NULL;
+CUI_Box *CUI_REFBOX_TOPLEFT=NULL;
 
 //初始化，創建所謂SDL的視窗和渲染器
 int CUI_Init(const char *title,int w,int h){
@@ -74,21 +71,13 @@ int CUI_Init(const char *title,int w,int h){
 
 	SDL_SetRenderVSync(_renderer,SDL_RENDERER_VSYNC_ADAPTIVE);
 
-	// SDL_Surface *icon=IMG_Load(iconPath);
-	// if(!icon) fprintf(stderr,"icon==NULL:%s\n",SDL_GetError());
-	// SDL_SetWindowIcon(_window,icon);
-	// SDL_DestroySurface(icon);
-
 	_font=TTF_OpenFont(DEFAUTTO_FONT_PATH,DEFAUTO_TEXT_SIZE);
 	if(!_font) fprintf(stderr,"font==NULL:%s\n",SDL_GetError());
 
-	//init
-	CLS_SetDeBug(CLS_SETDEBUG_FLAG_SING|CLS_SETDEBUG_FLAG_ERROR);
+	CLS_SetDeBug(CLS_SETDEBUG_FLAG_ERROR);
 	_boxList=CLS_Create(sizeof(CUI_Box*));
-	CUI_REFBOX_Q=(CUI_Box*)malloc(sizeof(CUI_Box*));
-	CUI_REFBOX_W=(CUI_Box*)malloc(sizeof(CUI_Box*));
-	CUI_REFBOX_A=(CUI_Box*)malloc(sizeof(CUI_Box*));
-	CUI_REFBOX_S=(CUI_Box*)malloc(sizeof(CUI_Box*));
+
+	CUI_REFBOX_TOPLEFT=(CUI_Box*)malloc(sizeof(CUI_Box*));
 
 	return 0;
 }
@@ -96,10 +85,7 @@ int CUI_Init(const char *title,int w,int h){
 //退出視窗，這將釋放所有CUI資源
 void CUI_Quit(){
 	CLS_Free(&_boxList);
-	free(CUI_REFBOX_Q);
-	free(CUI_REFBOX_W);
-	free(CUI_REFBOX_A);
-	free(CUI_REFBOX_S);
+	free(CUI_REFBOX_TOPLEFT);
 	TTF_CloseFont(_font);
 	SDL_DestroyRenderer(_renderer);
 	SDL_DestroyWindow(_window);

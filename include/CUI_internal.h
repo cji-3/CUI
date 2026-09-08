@@ -38,6 +38,7 @@
 #include <stdbool.h>
 
 #include <stdio.h>
+#define log(x,...) printf("%s %s %d:"x"\n",__FILE__,__func__,__LINE__ ,##__VA_ARGS__);
 
 #define DEFAUTO_TEXT_SIZE 16
 #define DEFAUTTO_FONT_PATH "C:/windows/fonts/msjh.ttc"
@@ -47,10 +48,7 @@ extern SDL_Renderer *_renderer;
 extern CLS_List *_boxList;
 extern TTF_Font *_font;
 extern bool _debugShowBoxKnow;
-extern CUI_Box *CUI_REFBOX_Q;
-extern CUI_Box *CUI_REFBOX_W;
-extern CUI_Box *CUI_REFBOX_A;
-extern CUI_Box *CUI_REFBOX_S;
+extern CUI_Box *CUI_REFBOX_TOPLEFT;
 
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus

@@ -41,6 +41,6 @@ CUI_Color *CUI_RGBA8888(uint8_t r,uint8_t g,uint8_t b,uint8_t a){
 	return out;
 }
 
-void CUI_DebugShowBoxKnow(){
-	_debugShowBoxKnow=true;
+void CUI_DebugShowBoxKnow(bool sw){
+	_debugShowBoxKnow=sw;
 }

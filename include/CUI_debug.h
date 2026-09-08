@@ -35,7 +35,7 @@
 extern "C" {
 #endif
 
-void CUI_DebugShowBoxKnow();
+void CUI_DebugShowBoxKnow(bool sw);
 
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus

@@ -61,10 +61,7 @@ extern "C" {
 
 //---
 
-extern CUI_Box *CUI_REFBOX_Q;
-extern CUI_Box *CUI_REFBOX_W;
-extern CUI_Box *CUI_REFBOX_A;
-extern CUI_Box *CUI_REFBOX_S;
+extern CUI_Box *CUI_REFBOX_TOPLEFT;
 
 /**
  * \brief 初始化，創建所謂SDL的視窗和渲染器

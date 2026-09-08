@@ -42,6 +42,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define CUI_CELL(CELL) ((CUI_Cell*)(CELL))
+
 //設定C函數定義，使使用C++時也是如此
 #ifdef __cplusplus
 extern "C" {
@@ -55,28 +57,25 @@ typedef enum CUI_CellType{
 	CUI_CELLTYPE_BLOCK
 }CUI_CellType;
 
-typedef struct CUI_CellCom{
-	CUI_CellType type;				/**< 類型 */
-	SDL_FRect fr;					/**< 範圍。除非你知道你在幹麻，否則別碰 */
-}CUI_CellCom;
-
 //---
 
 typedef struct CUI_Label{
-	CUI_CellCom com;
-	int w;						/**< 寬 */
-	int h;						/**< 高 */
-	const char *text;			/**< 文字 */
-	int text_size;				/**< 文字大小 */
-	CUI_Color color0;			/**< 前景色(RGBA8888) */
-	CUI_Color color1;			/**< 背景色(RGBA8888) */
-	CUI_Color colorT;			/**< 文字顏色(RGBA8888) */
-	bool show;					/**< 是否顯示 */
+	CUI_CellType type;				/**< 類型 */
+	SDL_FRect fr;					/**< 範圍。除非你知道你在幹麻，否則別碰 */
+	int w;							/**< 寬 */
+	int h;							/**< 高 */
+	const char *text;				/**< 文字 */
+	int text_size;					/**< 文字大小 */
+	CUI_Color color0;				/**< 前景色(RGBA8888) */
+	CUI_Color color1;				/**< 背景色(RGBA8888) */
+	CUI_Color colorT;				/**< 文字顏色(RGBA8888) */
+	bool show;						/**< 是否顯示 */
 }CUI_Label;
 
 typedef struct CUI_Button CUI_Button;
 typedef struct CUI_Button{
-	CUI_CellCom com;
+	CUI_CellType type;				/**< 類型 */
+	SDL_FRect fr;					/**< 範圍。除非你知道你在幹麻，否則別碰 */
 	const char *text;				/**< 文字 */
 	SDL_Texture *textTt;			/**< 除非你知道你在幹麻，否則別碰 */
 	int textW;						/**< 文字寬度。除非你知道你在幹麻，否則別碰 */
@@ -90,21 +89,25 @@ typedef struct CUI_Button{
 }CUI_Button;
 
 typedef struct CUI_Block{
-	CUI_CellCom com;
-	int w;						/**< 寬 */
-	int h;						/**< 高 */
-	CUI_Color color0;			/**< 前景色(RGBA8888) */
-	CUI_Color color1;			/**< 背景色(RGBA8888) */
-	bool show;					/**< 是否顯示 */
+	CUI_CellType type;				/**< 類型 */
+	SDL_FRect fr;					/**< 範圍。除非你知道你在幹麻，否則別碰 */
+	int w;							/**< 寬 */
+	int h;							/**< 高 */
+	CUI_Color color0;				/**< 前景色(RGBA8888) */
+	CUI_Color color1;				/**< 背景色(RGBA8888) */
+	bool show;						/**< 是否顯示 */
 }CUI_Block;
 
+typedef struct CUI_Cell{
+	CUI_CellType type;
+	SDL_FRect fr;
+}CUI_Cell;
+
+// typedef struct CUI_Button CUI_Cell;	/**< CUI_Cell就是一個指向CUI_Button或CUI_Label等等的元件 於是隨便拿了一個CUI_Button來表示 */
+
 //---
 
-typedef void CUI_Cell;
-
-//---
-
-CUI_Button *CUI_NewButton(char *text,void (*clickLib)(CUI_Button*));
+CUI_Button *CUI_NewButton(CUI_Box *box,char *text,void (*clickLib)(CUI_Button*));
 
 /**
  * @brief 當你利用CUI_Button等指標更改屬性時，需要呼叫此函式更新。

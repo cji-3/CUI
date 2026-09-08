@@ -31,18 +31,24 @@
 #include <CUI_cell.h>
 #include <stdlib.h>
 
-CUI_Box *CUI_NewVBox(CUI_Box *refBox,CUI_RefBoxVH refBoxPos,CUI_BoxWHFlag high,int *alignwScale){
+CUI_Box *CUI_NewVBox(CUI_Box *refBox,CUI_RefBoxVH refBoxPos,CUI_BoxWHFlag highFlag,int highAPArr[],CUI_BoxWHFlag wideFlag,int wideAPArr[]){
 	CUI_Box *out=(CUI_Box*)malloc(sizeof(CUI_Box));
+	out->show=true;
 	out->refBox=refBox;
 	out->refBoxPos=refBoxPos;
-	out->wOrH=high;
-	out->alignwScaleList=alignwScale;
+	out->hFlag=highFlag;
+	out->highAPArr=highAPArr;
+	out->wFlag=wideFlag;
+	out->wideAPArr=wideAPArr;
 	out->vhFlag=CUI_BOXVH_V;
 	out->cellList=CLS_Create(sizeof(CUI_Cell*));
 	CLS_Psh(_boxList,&out);
-	return out;
-}
 
-void CUI_BoxAddCell(CUI_Box *box,CUI_Cell *cell){
-	CLS_Psh(box->cellList,&cell);
+	if(highFlag==CUI_BOXWHFLAG_MAX) out->maxBoxDeBoxList=CLS_Create(sizeof(CUI_Box*));
+	else out->maxBoxDeBoxList=NULL;
+	if(refBox->hFlag==CUI_BOXWHFLAG_MAX && refBoxPos==CUI_REFBOX_V){
+		if(highFlag==CUI_BOXWHFLAG_WIN ) return NULL;	//錯誤
+		CLS_Psh(refBox->maxBoxDeBoxList,&out);
+	}
+	return out;
 }

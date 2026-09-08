@@ -35,9 +35,9 @@ const CUI_Color DEFAUTO_COLOR0={150,150,150,255};
 const CUI_Color DEFAUTO_COLOR1={0,0,0,255};
 const CUI_Color DEFAUTO_COLORT={0,0,0,255};
 
-CUI_Button *CUI_NewButton(char *text,void (*clickLib)(CUI_Button*)){
+CUI_Button *CUI_NewButton(CUI_Box *box,char *text,void (*clickLib)(CUI_Button*)){
 	CUI_Button *out=(CUI_Button*)malloc(sizeof(CUI_Button));
-	out->com.type=CUI_CELLTYPE_BUTTON;
+	out->type=CUI_CELLTYPE_BUTTON;
 	out->text=text;
 	out->textSize=DEFAUTO_TEXT_SIZE;
 	out->color0=DEFAUTO_COLOR0;
@@ -54,9 +54,10 @@ CUI_Button *CUI_NewButton(char *text,void (*clickLib)(CUI_Button*)){
 	out->textH=textTt->h;
 	out->textTt=textTt;
 
-	out->com.fr.w=textTt->w+12;
-	out->com.fr.h=textTt->h+12;
+	out->fr.w=textTt->w+12;
+	out->fr.h=textTt->h+12;
 
+	CLS_Psh(box->cellList,&out);
 	return out;
 }
 
@@ -77,8 +78,8 @@ int CUI_RenewCell(CUI_Cell *cell){
 			button->textH=textTt->h;
 			button->textTt=textTt;
 
-			button->com.fr.w=textTt->w+12;
-			button->com.fr.h=textTt->h+12;
+			button->fr.w=textTt->w+12;
+			button->fr.h=textTt->h+12;
 
 			break;
 		}
