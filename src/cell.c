@@ -58,6 +58,20 @@ CUI_Button *CUI_NewButton(CUI_Box *box,char *text,void (*clickLib)(CUI_Button*))
 	out->fr.h=textTt->h+12;
 
 	CLS_Psh(box->cellList,&out);
+
+	if(box->vhFlag==CUI_BOXVH_V){
+		switch(box->hFlag){
+			case CUI_BOXWHFLAG_MIN:
+				box->fr.h+=out->fr.h;
+				break;
+			default:
+
+				break;
+		}
+	}
+	else{
+	}
+
 	return out;
 }
 

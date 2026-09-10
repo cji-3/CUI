@@ -60,42 +60,45 @@ typedef enum CUI_CellType{
 //---
 
 typedef struct CUI_Label{
-	CUI_CellType type;				/**< 類型 */
-	SDL_FRect fr;					/**< 範圍。除非你知道你在幹麻，否則別碰 */
-	int w;							/**< 寬 */
-	int h;							/**< 高 */
-	const char *text;				/**< 文字 */
-	int text_size;					/**< 文字大小 */
-	CUI_Color color0;				/**< 前景色(RGBA8888) */
-	CUI_Color color1;				/**< 背景色(RGBA8888) */
-	CUI_Color colorT;				/**< 文字顏色(RGBA8888) */
-	bool show;						/**< 是否顯示 */
+	CUI_CellType type;					/**< 類型 */
+	SDL_FRect fr;						/**< 範圍。除非你知道你在幹麻，否則別碰 */
+
+	int w;								/**< 寬 */
+	int h;								/**< 高 */
+	const char *text;					/**< 文字 */
+	int text_size;						/**< 文字大小 */
+	CUI_Color color0;					/**< 前景色(RGBA8888) */
+	CUI_Color color1;					/**< 背景色(RGBA8888) */
+	CUI_Color colorT;					/**< 文字顏色(RGBA8888) */
+	bool show;							/**< 是否顯示 */
 }CUI_Label;
 
 typedef struct CUI_Button CUI_Button;
 typedef struct CUI_Button{
-	CUI_CellType type;				/**< 類型 */
-	SDL_FRect fr;					/**< 範圍。除非你知道你在幹麻，否則別碰 */
-	const char *text;				/**< 文字 */
-	SDL_Texture *textTt;			/**< 除非你知道你在幹麻，否則別碰 */
-	int textW;						/**< 文字寬度。除非你知道你在幹麻，否則別碰 */
-	int textH;						/**< 文字高度。除非你知道你在幹麻，否則別碰 */
-	int textSize;					/**< 文字大小 */
-	CUI_Color color0;				/**< 前景色(按鈕) */
-	CUI_Color color1;				/**< 背景色(邊框) */
-	CUI_Color colorT;				/**< 文字顏色 */
-	bool show;						/**< 是否顯示 */
-	void (*clickLib)(CUI_Button*);	/**< 按鈕按下回呼函式 */
+	CUI_CellType type;					/**< 類型 */
+	SDL_FRect fr;						/**< 範圍。除非你知道你在幹麻，否則別碰 */
+
+	const char *text;					/**< 文字 */
+	SDL_Texture *textTt;				/**< 除非你知道你在幹麻，否則別碰 */
+	int textW;							/**< 文字寬度。除非你知道你在幹麻，否則別碰 */
+	int textH;							/**< 文字高度。除非你知道你在幹麻，否則別碰 */
+	int textSize;						/**< 文字大小 */
+	CUI_Color color0;					/**< 前景色(按鈕) */
+	CUI_Color color1;					/**< 背景色(邊框) */
+	CUI_Color colorT;					/**< 文字顏色 */
+	bool show;							/**< 是否顯示 */
+	void (*clickLib)(CUI_Button*);		/**< 按鈕按下之回呼函式 */
 }CUI_Button;
 
 typedef struct CUI_Block{
-	CUI_CellType type;				/**< 類型 */
-	SDL_FRect fr;					/**< 範圍。除非你知道你在幹麻，否則別碰 */
-	int w;							/**< 寬 */
-	int h;							/**< 高 */
-	CUI_Color color0;				/**< 前景色(RGBA8888) */
-	CUI_Color color1;				/**< 背景色(RGBA8888) */
-	bool show;						/**< 是否顯示 */
+	CUI_CellType type;					/**< 類型 */
+	SDL_FRect fr;						/**< 範圍。除非你知道你在幹麻，否則別碰 */
+
+	int w;								/**< 寬 */
+	int h;								/**< 高 */
+	CUI_Color color0;					/**< 前景色(RGBA8888) */
+	CUI_Color color1;					/**< 背景色(RGBA8888) */
+	bool show;							/**< 是否顯示 */
 }CUI_Block;
 
 typedef struct CUI_Cell{

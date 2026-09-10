@@ -33,6 +33,7 @@
 
 CUI_Box *CUI_NewVBox(CUI_Box *refBox,CUI_RefBoxVH refBoxPos,CUI_BoxWHFlag highFlag,int highAPArr[],CUI_BoxWHFlag wideFlag,int wideAPArr[]){
 	CUI_Box *out=(CUI_Box*)malloc(sizeof(CUI_Box));
+	memset(&out->fr,0,sizeof(out->fr));
 	out->show=true;
 	out->refBox=refBox;
 	out->refBoxPos=refBoxPos;
@@ -50,5 +51,6 @@ CUI_Box *CUI_NewVBox(CUI_Box *refBox,CUI_RefBoxVH refBoxPos,CUI_BoxWHFlag highFl
 		if(highFlag==CUI_BOXWHFLAG_WIN ) return NULL;	//錯誤
 		CLS_Psh(refBox->maxBoxDeBoxList,&out);
 	}
+
 	return out;
 }

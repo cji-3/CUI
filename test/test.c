@@ -30,7 +30,7 @@ int main(){
 	CUI_NewButton(box1,"VBox test",buttonClick);
 	CUI_NewButton(box1,"button1 0 is index no.1",buttonClick);
 
-	CUI_Box *box2=CUI_NewVBox(box1,CUI_BOXVH_V,100,(int[]){0,1,0},CUI_BOXWHFLAG_MIN,NULL);
+	CUI_Box *box2=CUI_NewVBox(box1,CUI_BOXVH_V,CUI_BOXWHFLAG_MIN,(int[]){0,1,0},CUI_BOXWHFLAG_MIN,NULL);
 	CUI_NewButton(box2,"VBox test",buttonClick);
 	CUI_NewButton(box2,"button1 0 is index no.1",buttonClick);
 
