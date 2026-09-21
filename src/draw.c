@@ -36,6 +36,7 @@
 #define _setRenderDrawColor(/*(SDL_Renderer*)*/RENDERER,/*(CUI_Color)*/COLOR)	\
 SDL_SetRenderDrawColor(RENDERER,COLOR.r,COLOR.g,COLOR.b,COLOR.a)
 #define _setFRect(/*(SDL_Frect)*/FRECT,X,Y,W,H) do{(FRECT).x=X; (FRECT).y=Y; (FRECT).w=W; (FRECT).h=H;}while(0)
+
 #define GAP 8
 
 //---
@@ -95,10 +96,6 @@ void _eventTreat(){
 	}
 }
 
-// void _getBoxDeCellInfo(CUI_Box *box,float cellHArr[],float cellYArr[]){
-// 	for(int cellIndex=0;cellIndex<)
-// }
-
 void _render(){
 	for(int boxIndex=0;boxIndex<CLS_Len(_boxList);boxIndex++){	//boxIndex代表處理到第幾個box
 		CUI_Box *box=*(CUI_Box**)CLS_Get(_boxList,boxIndex);
@@ -120,18 +117,18 @@ void _render(){
 		}
 
 		//前置處理
-		int boxDeCellListLen=CLS_Len(boxDeCellList);
+		int cellLen=CLS_Len(boxDeCellList);	//boxDeCellListLen
 
 		int *highAPArr=box->highAPArr;	//high de alignw porportion array 對齊比例列表
 		if(!highAPArr){
-			highAPArr=(int*)malloc(boxDeCellListLen*sizeof(int));
-			memset(highAPArr,0,boxDeCellListLen);
-			highAPArr[boxDeCellListLen-1]=1;	//{0,0,...,1}靠左(上)對齊
+			highAPArr=(int*)malloc(cellLen*sizeof(int));
+			memset(highAPArr,0,cellLen);
+			highAPArr[cellLen-1]=1;	//{0,0,...,1}靠左(上)對齊
 		}
 
 		//取得box裡的所有cell的高和y座標
-		float cellHArr[boxDeCellListLen],cellYArr[boxDeCellListLen];
-		for(int cellIndex=0;cellIndex<boxDeCellListLen;cellIndex++){	//cellIndex代表處理到box中的第幾個cell
+		float cellHArr[cellLen],cellYArr[cellLen];
+		for(int cellIndex=0;cellIndex<cellLen;cellIndex++){	//cellIndex代表處理到box中的第幾個cell
 			CUI_Cell *cell=*(CUI_Cell**)CLS_Get(boxDeCellList,cellIndex);
 			cell->fr.x=box->fr.x+GAP;
 			cellHArr[cellIndex]=(*(CUI_Cell**)CLS_Get(boxDeCellList,cellIndex))->fr.h;
@@ -144,7 +141,7 @@ void _render(){
 		switch(box->hFlag){
 			case CUI_BOXWHFLAG_MIN:
 				if(box->vhFlag==CUI_BOXVH_V)
-					box->fr.h=_floatArrSum(boxDeCellListLen,cellHArr)+(boxDeCellListLen+1)*GAP;
+					box->fr.h=_floatArrSum(cellLen,cellHArr)+(cellLen+1)*GAP;
 				break;
 			case CUI_BOXWHFLAG_WIN:
 				if(box->vhFlag==CUI_BOXVH_V)
@@ -171,10 +168,10 @@ void _render(){
 		box->fr.w=0;
 
 		//cell處理
-		for(int cellIndex=0;cellIndex<boxDeCellListLen;cellIndex++){	//cellIndex代表處理到box中的第幾個cell
+		for(int cellIndex=0;cellIndex<cellLen;cellIndex++){	//cellIndex代表處理到box中的第幾個cell
 			CUI_Cell *cell=*(CUI_Cell**)CLS_Get(boxDeCellList,cellIndex);
 
-			switch(*(CUI_CellType*)cell){	//第一個成員都是type(cell->com.type)
+			switch(cell->type){	//第一個成員都是type(cell->com.type)
 				case CUI_CELLTYPE_LABEL:
 
 					break;
@@ -201,10 +198,10 @@ void _render(){
 						else{	//win,max,num,ref
 							if(cell->fr.w+2*GAP>box->fr.w) box->fr.w=cell->fr.w+2*GAP;
 
-							float cellHSum=_floatArrSum(boxDeCellListLen,cellHArr);
-							int aslSum=_intArrSum(boxDeCellListLen+1,highAPArr);
+							float cellHSum=_floatArrSum(cellLen,cellHArr);
+							int aslSum=_intArrSum(cellLen+1,highAPArr);
 							if(!aslSum) aslSum=1;
-							float cellUpGap=((float)highAPArr[cellIndex]/aslSum)*(box->fr.h-((boxDeCellListLen+1)*GAP+cellHSum));
+							float cellUpGap=((float)highAPArr[cellIndex]/aslSum)*(box->fr.h-((cellLen+1)*GAP+cellHSum));
 							button->fr.y=GAP+cellUpGap+((cellIndex==0)?0:cellYArr[cellIndex-1]+cellHArr[cellIndex-1]);
 							cellYArr[cellIndex]=button->fr.y;
 						}

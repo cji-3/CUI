@@ -57,19 +57,29 @@ CUI_Box *CUI_REFBOX_TOPLEFT=NULL;
 
 //初始化，創建所謂SDL的視窗和渲染器
 int CUI_Init(const char *title,int w,int h){
+	//init
+	SDL_Init(SDL_INIT_VIDEO);
+	TTF_Init();
+
 	_window=SDL_CreateWindow(title,w,h,0);
-	if(!_window) return 1;
+	if(!_window){
+		SDL_Log("create window:%s",SDL_GetError());
+		return 1;
+	}
 	_renderer=SDL_CreateRenderer(_window,NULL);
 	if(!_renderer){
+		SDL_Log("create renderer:%s",SDL_GetError());
 		SDL_DestroyWindow(_window);
 		return 2;
 	}
 
-	//init
-	SDL_Init(SDL_INIT_AUDIO);
-	TTF_Init();
+	if(!SDL_SetRenderVSync(_renderer,SDL_RENDERER_VSYNC_ADAPTIVE)){
+		SDL_Log("on VSync:%s",SDL_GetError());
+		SDL_SetRenderVSync(_renderer,SDL_RENDERER_VSYNC_DISABLED);
 
-	SDL_SetRenderVSync(_renderer,SDL_RENDERER_VSYNC_ADAPTIVE);
+		//看來我們無法啟用垂直同步，所以我們將其關閉了。
+		SDL_Log("lt appears we cannot enable VSync, so we turned it off.");
+	}
 
 	_font=TTF_OpenFont(DEFAUTTO_FONT_PATH,DEFAUTO_TEXT_SIZE);
 	if(!_font) fprintf(stderr,"font==NULL:%s\n",SDL_GetError());
