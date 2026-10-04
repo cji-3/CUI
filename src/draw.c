@@ -33,8 +33,10 @@
 #include <CLS/CLS.h>
 #include <stdbool.h>
 
+//原本r,g,b,a要分開給，此巨集可以直接傳CUI_Color進去
 #define _setRenderDrawColor(/*(SDL_Renderer*)*/RENDERER,/*(CUI_Color)*/COLOR)	\
 SDL_SetRenderDrawColor(RENDERER,COLOR.r,COLOR.g,COLOR.b,COLOR.a)
+
 #define _setFRect(/*(SDL_Frect)*/FRECT,X,Y,W,H) do{(FRECT).x=X; (FRECT).y=Y; (FRECT).w=W; (FRECT).h=H;}while(0)
 
 #define GAP 8

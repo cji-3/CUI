@@ -66,16 +66,16 @@ typedef enum{
 
 typedef struct CUI_Box{
 	CUI_BoxVH vhFlag;
-	CUI_Box *refBox;			/**< 要相對於那個容器 */
-	CUI_RefBoxVH refBoxPos;		/**< 相對於該容器的垂直或水平延伸 */
+	CUI_Box *refBox;				/**< 要相對於那個容器 */
+	CUI_RefBoxVH refBoxPos;			/**< 相對於該容器的垂直或水平延伸 */
 	CUI_BoxWHFlag hFlag;			/**< 高的旗標 */
 	int *highAPArr;
 	CUI_BoxWHFlag wFlag;			/**< 寬的旗標 */
 	int *wideAPArr;
 	SDL_FRect fr;
 	bool show;
-	CLS_List *cellList;			/**< 存放容器內的元件列表(CUI_Cell**) */
-	CLS_List *maxBoxDeBoxList;	/**< 若是max的box的話就要此list記錄有那些box是在這個垂直或水平的地方 (CUI_Box**)*/
+	CLS_List *cellList;				/**< 存放容器內的元件列表(CUI_Cell**) */
+	CLS_List *maxBoxDeBoxList;		/**< 若是max的box的話就要此list記錄有那些box是在這個垂直或水平的地方 (CUI_Box**)*/
 }CUI_Box;
 
 /**
