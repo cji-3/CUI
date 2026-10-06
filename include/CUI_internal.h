@@ -37,7 +37,7 @@
 #include <CUI_debug.h>
 #include <stdbool.h>
 
-#include <stdio.h>
+#include <stdio.h>	//這在其他引用此標頭檔的.c中可能使用到 然而這只是暫時性用來debug的 所以之後須移除此
 #define log(x,...) printf("%s %s %d:"x"\n",__FILE__,__func__,__LINE__ ,##__VA_ARGS__);
 
 #define DEFAUTO_TEXT_SIZE 16
