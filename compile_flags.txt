@@ -1,2 +1,3 @@
 -Iextern/include
 -Iinclude
+-std=c99
