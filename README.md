@@ -2,7 +2,7 @@
 
 版本：1.0.0
 
-![Logo](./doc/CUI_LOGO_64x64.png)
+![Logo](./docs/CUI_LOGO_64x64.png)
 
 ## C語言使用者介面UI函式庫
 
@@ -23,7 +23,7 @@
 
 Version: 1.0.0
 
-![Logo](./doc/CUI_LOGO_64x64.png)
+![Logo](./docs/CUI_LOGO_64x64.png)
 
 ## C code User Interface (UI) Function Library
 
